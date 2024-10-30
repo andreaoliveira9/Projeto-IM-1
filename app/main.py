@@ -41,11 +41,11 @@ MUSIC_INFO = """O YouTube Music é uma plataforma de streaming que permite aos u
 async def message_handler(youtube_music: YoutubeMusic, message: str):
     global intent_before
     message = process_message(message)
+    print(f"Message received: {message}")
 
     if message == "OK":
         return "OK"
     elif message["intent"]["name"] in list_intent:
-        print(f"Message received/ intent: {message['intent']['name']}")
         intent = message["intent"]["name"]
         if message["intent"]["confidence"] < 0.7:
             youtube_music.tts(random_not_understand())
@@ -53,15 +53,9 @@ async def message_handler(youtube_music: YoutubeMusic, message: str):
             youtube_music.tts(random_greet())
         elif intent == "goodbye":
             youtube_music.tts(random_goodbye())
+            youtube_music.close()
             global not_quit
             not_quit = False
-        elif intent == "play_song":
-            if message["entities"]:
-                song_name = message["entities"][0]["value"]
-                youtube_music.play_song(song_name)
-                intent_before = intent
-            else:
-                youtube_music.tts("Por favor, diga o nome da música que deseja tocar.")
         elif intent == "pause":
             youtube_music.pause()
             intent_before = intent
@@ -86,24 +80,6 @@ async def message_handler(youtube_music: YoutubeMusic, message: str):
         elif intent == "unmute":
             youtube_music.unmute()
             intent_before = intent
-        elif intent == "play_playlist":
-            if message["entities"]:
-                playlist_name = message["entities"][0]["value"]
-                youtube_music.play_playlist(playlist_name)
-                intent_before = intent
-            else:
-                youtube_music.tts(
-                    "Por favor, diga o nome da playlist que deseja tocar."
-                )
-        elif intent == "add_to_favorites":
-            if message["entities"]:
-                song_name = message["entities"][0]["value"]
-                youtube_music.add_to_favorites(song_name)
-                intent_before = intent
-            else:
-                youtube_music.tts(
-                    "Por favor, diga o nome da música que deseja adicionar aos favoritos."
-                )
         elif intent == "repeat_song":
             youtube_music.repeat_song()
             intent_before = intent
@@ -112,9 +88,6 @@ async def message_handler(youtube_music: YoutubeMusic, message: str):
             intent_before = intent
         elif intent == "shuffle_off":
             youtube_music.shuffle_off()
-            intent_before = intent
-        elif intent == "help":
-            youtube_music.tts(MUSIC_INFO)
             intent_before = intent
         else:
             youtube_music.tts(random_not_understand())

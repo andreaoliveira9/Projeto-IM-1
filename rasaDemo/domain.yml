@@ -20,7 +20,6 @@ intents:
 entities:
   - song
   - artist
-  - volume
   - mode
   - playlist
 
@@ -37,12 +36,6 @@ slots:
     mappings:
       - type: from_entity
         entity: artist
-  volume:
-    type: text
-    influence_conversation: true
-    mappings:
-      - type: from_entity
-        entity: volume
   mode:
     type: text
     influence_conversation: true

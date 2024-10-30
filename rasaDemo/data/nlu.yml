@@ -112,24 +112,22 @@ nlu:
 
   - intent: repeat_song
     examples: |
-      - Podes repetir a música que acabou de tocar?
-      - Dá para colocar a música atual no modo de repetição?
-      - Quero ouvir essa música de novo, coloca em repetir
-      - Podes repetir essa música para mim?
+      - Podes [repetir}(mode) a música que acabou de tocar?
+      - Dá para colocar a música atual no [modo de repetição](mode)?
+      - Quero ouvir essa música de novo, coloca em [repetir](mode)
+      - Podes [repetir](mode) essa música para mim?
       - Coloca a mesma música para tocar novamente
 
   - intent: shuffle_on
     examples: |
-      - Ativa o modo aleatório para as músicas
-      - Podes colocar a playlist no modo aleatório?
-      - Gostaria que ativasses o modo shuffle, por favor
-      - Podes embaralhar a ordem das músicas?
-      - Coloca o modo de reprodução em aleatório
+      - Ativa o [modo aleatório](mode) para as músicas
+      - Podes colocar a playlist no [modo aleatório](mode)?
+      - Gostaria que ativasses o modo [shuffle](mode), por favor
+      - Coloca o modo de reprodução em [aleatório](mode)
 
   - intent: shuffle_off
     examples: |
-      - Desativa o modo aleatório para as músicas
-      - Podes tirar o modo shuffle da playlist?
-      - Coloca a playlist para tocar na ordem normal
-      - Desativa o modo embaralhado, por favor
-      - Podes tocar as músicas na sequência original?
+      - Desativa o [modo aleatório](mode) para as músicas
+      - Podes tirar o modo [shuffle](mode) da playlist?
+      - Coloca a playlist para tocar na [ordem normal](mode)
+      - Podes tocar as músicas na [sequência original](mode)?

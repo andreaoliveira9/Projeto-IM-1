@@ -1,15 +1,28 @@
 import time
-from selenium.webdriver import Firefox
+from selenium.webdriver import Chrome
+from selenium.webdriver.common.keys import Keys
 from utils import *
 from mapping import Buttons, Inputs
+from ctypes import cast, POINTER
+from comtypes import CLSCTX_ALL
+from pycaw.pycaw import AudioUtilities, IAudioEndpointVolume
+
+# Obter o dispositivo de áudio padrão
+devices = AudioUtilities.GetSpeakers()
+interface = devices.Activate(IAudioEndpointVolume._iid_, CLSCTX_ALL, None)
+volume = cast(interface, POINTER(IAudioEndpointVolume))
+
+# Obter o volume atual
+current_volume = volume.GetMasterVolumeLevelScalar()
 
 
 class YoutubeMusic:
     def __init__(self, TTS) -> None:
-        self.browser = Firefox()
+        self.browser = Chrome()
         self.browser.get("https://music.youtube.com/")
         self.browser.maximize_window()
-        self.mute = False
+        self.muted = False
+        self.shuffled = False
         self.tts_func = TTS
         self.tts = TTS
         self.tts(
@@ -17,120 +30,110 @@ class YoutubeMusic:
         )
         self.button = Buttons(self.browser)
         self.input = Inputs(self.browser)
-        time.sleep(4)  # Tempo para garantir que a página carregue
+        time.sleep(4)
+        self.button.cookies_accept.click()
+        time.sleep(2)
         self.tts("Você pode começar a tocar suas músicas ou playlists!")
 
-    def play_song(self, song_name):
+    def pause(self):  # DONE
         try:
-            search_box = self.input.search
-            search_box.clear()
-            search_box.send_keys(song_name)
-            search_box.submit()
-            time.sleep(2)  # Espera o carregamento dos resultados
-            first_result = self.button.first_song_result
-            first_result.click()
-            self.tts(f"Tocando {song_name}")
-        except:
-            self.tts("Desculpe, não consegui encontrar essa música.")
-
-    def pause(self):
-        try:
-            self.button.pause.click()
+            self.button.play.click()
             self.tts("Música pausada.")
         except:
             self.tts("Não foi possível pausar a música.")
 
-    def resume(self):
+    def resume(self):  # DONE
         try:
             self.button.play.click()
             self.tts("Música retomada.")
         except:
             self.tts("Não foi possível retomar a música.")
 
-    def next_song(self):
+    def next_song(self):  # DONE
         try:
             self.button.next.click()
             self.tts("Próxima música.")
         except:
             self.tts("Não foi possível avançar para a próxima música.")
 
-    def previous_song(self):
+    def previous_song(self):  # DONE
         try:
+            self.button.previous.click()
             self.button.previous.click()
             self.tts("Música anterior.")
         except:
             self.tts("Não foi possível voltar para a música anterior.")
 
-    def increase_volume(self):
+    def increase_volume(self):  # DONE
         try:
-            self.button.volume_up.click()
+            new_volume = max(0, current_volume + 0.1)
+            volume.SetMasterVolumeLevelScalar(new_volume, None)
             self.tts("Aumentando o volume.")
         except:
             self.tts("Não foi possível aumentar o volume.")
 
-    def decrease_volume(self):
+    def decrease_volume(self):  # DONE
         try:
-            self.button.volume_down.click()
+            new_volume = max(0, current_volume - 0.1)
+            volume.SetMasterVolumeLevelScalar(new_volume, None)
             self.tts("Diminuindo o volume.")
         except:
             self.tts("Não foi possível diminuir o volume.")
 
-    def mute_func(self):
-        if self.mute:
+    def mute(self):  # DONE
+        if self.muted:
             self.tts("O som já está desativado.")
             return
-        self.button.mute.click()
-        self.mute = True
-        self.tts("O som foi silenciado.")
 
-    def unmute(self):
-        if not self.mute:
+        try:
+            self.button.mute.click()
+            self.muted = True
+            self.tts("O som foi silenciado.")
+        except:
+            self.tts("Não foi possível silenciar o som.")
+
+    def unmute(self):  # DONE
+        if not self.muted:
             self.tts("O som não está desativado.")
             return
-        self.button.unmute.click()
-        self.mute = False
-        self.tts("O som foi reativado.")
 
-    def play_playlist(self, playlist_name):
         try:
-            search_box = self.input.search
-            search_box.clear()
-            search_box.send_keys(playlist_name)
-            search_box.submit()
-            time.sleep(2)  # Espera o carregamento dos resultados
-            first_playlist = self.button.first_playlist_result
-            first_playlist.click()
-            self.tts(f"Tocando a playlist {playlist_name}.")
+            self.button.mute.click()
+            self.muted = False
+            self.tts("O som foi reativado.")
         except:
-            self.tts("Desculpe, não consegui encontrar essa playlist.")
+            self.tts("Não foi possível reativar o som.")
 
-    def add_to_favorites(self, song_name):
+    def repeat_song(self):  # DONE
         try:
-            # Logica para adicionar a favoritos
-            self.tts(f"{song_name} foi adicionado aos favoritos.")
-        except:
-            self.tts("Não foi possível adicionar à lista de favoritos.")
-
-    def repeat_song(self):
-        try:
-            self.button.repeat.click()
+            self.button.previous.click()
             self.tts("Repetindo a música.")
         except:
             self.tts("Não foi possível ativar a repetição.")
 
-    def shuffle_on(self):
+    def shuffle_on(self):  # DONE
+        if self.shuffled:
+            self.tts("O modo aleatório já está ativado.")
+            return
+
         try:
             self.button.shuffle.click()
+            self.shuffled = True
             self.tts("Modo aleatório ativado.")
         except:
             self.tts("Não foi possível ativar o modo aleatório.")
 
-    def shuffle_off(self):
+    def shuffle_off(self):  # DONE
+        if not self.shuffled:
+            self.tts("O modo aleatório já está desativado.")
+            return
+
         try:
             self.button.shuffle.click()
+            self.shuffled = False
             self.tts("Modo aleatório desativado.")
         except:
             self.tts("Não foi possível desativar o modo aleatório.")
 
-    def close(self):
+    def close(self):  # DONE
         self.browser.close()

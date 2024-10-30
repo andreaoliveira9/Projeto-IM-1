@@ -335,6 +335,7 @@
                 "</b></span>";
 
               sendMMI(final_transcript);
+
               circle.animate(20, 0, "now").attr({ fill: "#000" });
               //startkws();
             } else {
@@ -457,6 +458,7 @@
       function sendMMI(final_transcript) {
         var obj = new Object();
         obj.text = final_transcript;
+        console.log(obj);
         $.post(
           "http://localhost:5005/model/parse",
           JSON.stringify(obj),
