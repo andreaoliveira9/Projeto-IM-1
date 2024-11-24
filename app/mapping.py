@@ -56,8 +56,38 @@ class Buttons(MapObject):
             "//*[@id='right-controls']/div/tp-yt-paper-icon-button[3]"
         )
 
+    @property
+    def login(self):
+        return self.find_element(
+            "/html/body/ytmusic-app/ytmusic-app-layout/ytmusic-nav-bar/div[3]/a"
+        )
+
+    @property
+    def next_email(self):
+        return self.find_element(
+            "/html/body/div[1]/div[1]/div[2]/c-wiz/div/div[3]/div/div[1]/div/div"
+        )
+
+    @property
+    def next_password(self):
+        return self.find_element(
+            "/html/body/div[1]/div[1]/div[2]/c-wiz/div/div[3]/div/div[1]/div/div"
+        )
+
 
 class Inputs(MapObject):
     @property
     def search(self):
         return self.find_element("//*[@id='input']")
+
+    @property
+    def email(self):
+        return self.find_element(
+            "/html/body/div[1]/div[1]/div[2]/c-wiz/div/div[2]/div/div/div[1]/form/span/section/div/div/div[1]/div/div[1]/div/div[1]/input"
+        )
+
+    @property
+    def password(self):
+        return self.find_element(
+            "/html/body/div[1]/div[1]/div[2]/c-wiz/div/div[2]/div/div/div/form/span/section[2]/div/div/div[1]/div[1]/div/div/div/div/div[1]/div/div[1]/input"
+        )

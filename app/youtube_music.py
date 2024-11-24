@@ -1,5 +1,9 @@
+from selenium.common.exceptions import TimeoutException, NoSuchElementException
+from selenium.webdriver.common.by import By
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
+import undetected_chromedriver as uc
 import time
-from selenium.webdriver import Chrome
 from selenium.webdriver.common.keys import Keys
 from utils import *
 from mapping import Buttons, Inputs
@@ -12,27 +16,80 @@ devices = AudioUtilities.GetSpeakers()
 interface = devices.Activate(IAudioEndpointVolume._iid_, CLSCTX_ALL, None)
 volume = cast(interface, POINTER(IAudioEndpointVolume))
 
+print("Credenciais YouTube Music")
+# EMAIL = input("Email: ")
+# PASSWORD = input("Senha: ")
+
+EMAIL = "andreoliveira.net1"
+PASSWORD = "Andre-9664"
+
 
 class YoutubeMusic:
     def __init__(self, TTS) -> None:
-        self.browser = Chrome()
-        self.browser.get("https://music.youtube.com/")
-        self.browser.maximize_window()
-        self.muted = False
-        self.shuffled = False
-        self.paused = False
-        self.repeat = 0
-        self.tts_func = TTS
-        self.tts = TTS
-        self.tts(
-            "Bem-vindo ao YouTube Music, onde você pode ouvir suas músicas favoritas!"
-        )
-        self.button = Buttons(self.browser)
-        self.input = Inputs(self.browser)
-        time.sleep(4)
-        self.button.cookies_accept.click()
-        time.sleep(2)
-        self.tts("Você pode começar a tocar suas músicas ou playlists!")
+        try:
+            self.browser = uc.Chrome()
+            self.browser.get("https://music.youtube.com/")
+            self.browser.maximize_window()
+            self.muted = False
+            self.shuffled = False
+            self.paused = False
+            self.repeat = 0
+            self.tts_func = TTS
+            self.tts = TTS
+            self.button = Buttons(self.browser)
+            self.input = Inputs(self.browser)
+
+            # Implementar login com esperas explícitas
+            self.perform_login()
+
+            self.tts(
+                "Bem-vindo ao YouTube Music, onde você pode ouvir suas músicas favoritas!"
+            )
+        except Exception as e:
+            print(f"Erro: {e}")
+            self.close()
+
+    def perform_login(self):
+        wait = WebDriverWait(self.browser, 20)
+        try:
+            # Aceitar cookies
+            cookies_accept_button = wait.until(
+                EC.element_to_be_clickable(self.button.cookies_accept)
+            )
+            cookies_accept_button.click()
+
+            # Clicar no botão de login
+            login_button = wait.until(EC.element_to_be_clickable(self.button.login))
+            login_button.click()
+
+            # Inserir email
+            email_input = wait.until(EC.element_to_be_clickable(self.input.email))
+            email_input.send_keys(EMAIL)
+            next_email_button = wait.until(
+                EC.element_to_be_clickable(self.button.next_email)
+            )
+            next_email_button.click()
+
+            time.sleep(5)
+            # Inserir senha
+            password_input = wait.until(EC.element_to_be_clickable(self.input.password))
+            password_input.send_keys(PASSWORD)
+            next_password_button = wait.until(
+                EC.element_to_be_clickable(self.button.next_password)
+            )
+            next_password_button.click()
+
+            time.sleep(5)
+
+        except TimeoutException as te:
+            print(f"TimeoutException: {te}")
+            self.close()
+        except NoSuchElementException as ne:
+            print(f"NoSuchElementException: {ne}")
+            self.close()
+        except Exception as e:
+            print(f"Erro inesperado: {e}")
+            self.close()
 
     def pause(self):  # DONE
         if self.paused:
