@@ -80,11 +80,19 @@ class Buttons(MapObject):
             "/html/body/ytmusic-app/ytmusic-app-layout/ytmusic-player-bar/div[2]/div[3]/ytmusic-like-button-renderer/yt-button-shape[2]"
         )
 
+    @property
+    def first_music(self):
+        return self.find_element(
+            "/html/body/ytmusic-app/ytmusic-app-layout/div[4]/ytmusic-search-page/ytmusic-tabbed-search-results-renderer/div[2]/ytmusic-section-list-renderer/div[2]/ytmusic-shelf-renderer[1]/div[3]/ytmusic-responsive-list-item-renderer[1]/div[1]/ytmusic-item-thumbnail-overlay-renderer/div/ytmusic-play-button-renderer/div"
+        )
+
 
 class Inputs(MapObject):
     @property
     def search(self):
-        return self.find_element("//*[@id='input']")
+        return self.find_element(
+            "/html/body/ytmusic-app/ytmusic-app-layout/ytmusic-nav-bar/div[2]/ytmusic-search-box/div/div[1]/input"
+        )
 
     @property
     def email(self):

@@ -1,7 +1,7 @@
 version: "3.1"
 intents:
   - goodbye
-  - play_music
+  - search_music
   - play_playlist
   - control_music
   - change_track
@@ -13,14 +13,21 @@ entities:
   - playlist
   - song
   - artist
+  - context
 
 slots:
   playlist:
     type: text
-    influence_conversation: false
+    influence_conversation: true
     mappings:
       - type: from_entity
         entity: playlist
+  context:
+    type: text
+    influence_conversation: true
+    mappings:
+      - type: from_entity
+        entity: context
   song:
     type: text
     influence_conversation: false

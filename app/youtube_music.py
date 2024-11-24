@@ -39,6 +39,7 @@ class YoutubeMusic:
             self.tts = TTS
             self.button = Buttons(self.browser)
             self.input = Inputs(self.browser)
+            self.wait = WebDriverWait(self.browser, 20)
 
             self.perform_login()
 
@@ -50,31 +51,34 @@ class YoutubeMusic:
             self.close()
 
     def perform_login(self):
-        wait = WebDriverWait(self.browser, 20)
         try:
             # Aceitar cookies
-            cookies_accept_button = wait.until(
+            cookies_accept_button = self.wait.until(
                 EC.element_to_be_clickable(self.button.cookies_accept)
             )
             cookies_accept_button.click()
 
             # Clicar no botão de login
-            login_button = wait.until(EC.element_to_be_clickable(self.button.login))
+            login_button = self.wait.until(
+                EC.element_to_be_clickable(self.button.login)
+            )
             login_button.click()
 
             # Inserir email
-            email_input = wait.until(EC.element_to_be_clickable(self.input.email))
+            email_input = self.wait.until(EC.element_to_be_clickable(self.input.email))
             email_input.send_keys(EMAIL)
-            next_email_button = wait.until(
+            next_email_button = self.wait.until(
                 EC.element_to_be_clickable(self.button.next_email)
             )
             next_email_button.click()
 
             time.sleep(5)
             # Inserir senha
-            password_input = wait.until(EC.element_to_be_clickable(self.input.password))
+            password_input = self.wait.until(
+                EC.element_to_be_clickable(self.input.password)
+            )
             password_input.send_keys(PASSWORD)
-            next_password_button = wait.until(
+            next_password_button = self.wait.until(
                 EC.element_to_be_clickable(self.button.next_password)
             )
             next_password_button.click()
@@ -254,6 +258,29 @@ class YoutubeMusic:
             self.tts("Música curtida.")
         except:
             self.tts("Não foi possível curtir a música.")
+
+    def search_music(self, song, artist):  # DONE
+        try:
+            self.browser.get("https://music.youtube.com/")
+
+            search_input = self.input.search
+            search_input.clear()
+            search_input.send_keys(f"{song} {artist}")
+            search_input.send_keys(Keys.RETURN)
+            self.tts(f"Procurando por '{song}' de {artist}.")
+
+            time.sleep(1)
+            print(self.button.first_music)
+            self.button.first_music.click()
+
+        except:
+            self.tts("Não foi possível encontrar a música.")
+
+    def play_public_playlist(self, playlist):
+        pass
+
+    def play_mine_playlist(self, playlist):
+        pass
 
     def close(self):  # DONE
         self.browser.close()
