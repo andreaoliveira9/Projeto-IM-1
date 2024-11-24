@@ -10,17 +10,6 @@ def randomize(func):
 
 
 @randomize
-def random_greet():
-    return [
-        "Olá! Como posso ajudar você hoje?",
-        "Oi! O que você gostaria de ouvir?",
-        "Olá! Estou aqui para tocar suas músicas.",
-        "Oi! Pronto para curtir um pouco de música?",
-        "E aí! O que você gostaria que eu tocasse?",
-    ]
-
-
-@randomize
 def random_goodbye():
     return [
         "Até logo! Espero que tenha gostado da música!",

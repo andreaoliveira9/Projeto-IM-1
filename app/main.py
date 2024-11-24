@@ -14,23 +14,13 @@ HOST = "127.0.0.1"
 not_quit = True
 intent_before = ""
 list_intent = [
-    "greet",
-    "goodbye",
-    "play_song",
-    "pause",
-    "resume",
-    "next_song",
-    "previous_song",
-    "increase_volume",
-    "decrease_volume",
-    "mute",
-    "unmute",
-    "play_playlist",
+    "play_music",
+    "control_music",
+    "change_track",
+    "adjust_volume",
+    "set_mode",
     "add_to_favorites",
-    "repeat_song",
-    "shuffle_on",
-    "shuffle_off",
-    "help",
+    "goodbye",
 ]
 
 MUSIC_INFO = """O YouTube Music é uma plataforma de streaming que permite aos usuários ouvir músicas e assistir a vídeos musicais. 
@@ -45,59 +35,99 @@ async def message_handler(youtube_music: YoutubeMusic, message: str):
 
     if message == "OK":
         return "OK"
-    elif message["intent"]["name"] in list_intent:
-        intent = message["intent"]["name"]
-        if message["intent"]["confidence"] < 0.7:
-            youtube_music.tts(random_not_understand())
-        elif intent == "greet":
-            youtube_music.tts(random_greet())
-        elif intent == "goodbye":
-            youtube_music.tts(random_goodbye())
-            youtube_music.close()
-            global not_quit
-            not_quit = False
-        elif intent == "pause":
-            youtube_music.pause()
-            intent_before = intent
-        elif intent == "resume":
-            youtube_music.resume()
-            intent_before = intent
-        elif intent == "next_song":
-            youtube_music.next_song()
-            intent_before = intent
-        elif intent == "previous_song":
-            youtube_music.previous_song()
-            intent_before = intent
-        elif intent == "increase_volume":
-            youtube_music.increase_volume()
-            intent_before = intent
-        elif intent == "decrease_volume":
-            youtube_music.decrease_volume()
-            intent_before = intent
-        elif intent == "mute":
-            youtube_music.mute()
-            intent_before = intent
-        elif intent == "unmute":
-            youtube_music.unmute()
-            intent_before = intent
-        elif intent == "repeat_song":
-            youtube_music.repeat_song()
-            intent_before = intent
-        elif intent == "shuffle_on":
-            youtube_music.shuffle_on()
-            intent_before = intent
-        elif intent == "shuffle_off":
-            youtube_music.shuffle_off()
-            intent_before = intent
+
+    # Verificar se o intent está na lista permitida
+    intent = message["intent"]["name"]
+    confidence = message["intent"]["confidence"]
+    entities = message.get("entities", [])
+
+    if intent not in list_intent:
+        youtube_music.tts(random_not_understand())
+        print(f"Intent desconhecido: {intent}")
+        return
+
+    if confidence < 0.7:
+        youtube_music.tts(random_not_understand())
+        print(f"Confiança insuficiente: {confidence}")
+        return
+
+    # Tratar intents genéricos com base em entidades
+    if intent == "play_music":
+        # Identificar se é música ou playlist
+        song = next((e["value"] for e in entities if e["entity"] == "song"), None)
+        artist = next((e["value"] for e in entities if e["entity"] == "artist"), None)
+        type = next((e["value"] for e in entities if e["entity"] == "type"), "music")
+
+        if type == "playlist":
+            youtube_music.play_playlist(song)
+            youtube_music.tts(f"Tocando a playlist {song}.")
         else:
-            youtube_music.tts(random_not_understand())
-            print(f"Command not found: {message}")
+            youtube_music.play_song(song, artist)
+            youtube_music.tts(f"Tocando '{song}' de {artist}.")
+
+    elif intent == "control_music":  # DONE
+        # Pausar ou continuar
+        action = next((e["value"] for e in entities if e["entity"] == "action"), None)
+        if action == "pause":
+            youtube_music.pause()
+        elif action == "resume":
+            youtube_music.resume()
+
+    elif intent == "change_track":  # DONE
+        # Mudar para próxima ou anterior
+        direction = next(
+            (e["value"] for e in entities if e["entity"] == "direction"), None
+        )
+        if direction == "next":
+            youtube_music.next_song()
+        elif direction == "previous":
+            youtube_music.previous_song()
+        elif direction == "same":
+            youtube_music.repeat_song()
+
+    elif intent == "adjust_volume":  # DONE
+        # Ações de volume
+        action = next((e["value"] for e in entities if e["entity"] == "action"), None)
+        if action == "increase":
+            youtube_music.increase_volume()
+        elif action == "decrease":
+            youtube_music.decrease_volume()
+        elif action == "mute":
+            youtube_music.mute()
+        elif action == "unmute":
+            youtube_music.unmute()
+
+    elif intent == "set_mode":  # DONE
+        # Modos como shuffle ou repeat
+        mode = next((e["value"] for e in entities if e["entity"] == "mode"), None)
+        if mode == "shuffle_on":
+            youtube_music.shuffle_on()
+        elif mode == "shuffle_off":
+            youtube_music.shuffle_off()
+        elif mode == "repeat_one":
+            youtube_music.repeat_one()
+        elif mode == "repeat_all":
+            youtube_music.repeat_all()
+        elif mode == "repeat_off":
+            youtube_music.repeat_off()
+
+    elif intent == "add_to_favorites":
+        youtube_music.add_to_favorites()
+        youtube_music.tts("Música adicionada aos favoritos.")
+
+    elif intent == "goodbye":  # DONE
+        youtube_music.tts(random_goodbye())
+        youtube_music.close()
+        global not_quit
+        not_quit = False
+
     else:
         youtube_music.tts(random_not_understand())
-        print(f"Command not found: {message}")
+        print(f"Intent não reconhecido: {intent}")
 
 
 def process_message(message):
+    """Processa a mensagem recebida e extrai NLU."""
     if message == "OK":
         return "OK"
     else:

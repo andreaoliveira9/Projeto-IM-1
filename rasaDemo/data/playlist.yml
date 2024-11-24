@@ -2,23 +2,39 @@ version: "3.1"
 nlu:
   - lookup: playlist
     examples: |
-      - Pop Hits
-      - Relaxing Music
-      - Jazz Classics
-      - Rock Classics
-      - Indie Playlist
-      - Sucessos do momento
-      - Músicas românticas
-      - Treino
-      - Festa
-      - Clássicos do rock
-      - Top Brasil
-      - Hip Hop Vibes
-      - Anos 80
-      - Pop Acústico
-      - Chill Out
-      - Música para estudar
-      - Hits do verão
-      - Melhores do ano
-      - Músicas internacionais
-      - Playlist para dormir
+      - Alegre
+      - Autumn Feel
+      - Concentração
+      - Impulsos de energia
+      - Natal
+      - Orgulho
+      - Relaxar
+      - Romance
+      - Sono
+      - Triste
+      - Viagem de e para o trabalho
+      - Vidas negras importam
+      - Africana
+      - Árabe
+      - Bandas sonoras e musicais
+      - Blues
+      - Bollywood e indiana
+      - Country e americana
+      - Dança e eletrónica
+      - Décadas
+      - Família
+      - Folk e acústica
+      - Hip-hop
+      - Indie e alternativa
+      - J-Pop
+      - Jazz
+      - K-Pop
+      - Latina
+      - Metal
+      - Música clássica
+      - Outono
+      - Pop
+      - Pop em mandarim e pop cantonês
+      - R&B e soul
+      - Reggae e caribenha
+      - Rock
