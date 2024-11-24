@@ -16,12 +16,13 @@ devices = AudioUtilities.GetSpeakers()
 interface = devices.Activate(IAudioEndpointVolume._iid_, CLSCTX_ALL, None)
 volume = cast(interface, POINTER(IAudioEndpointVolume))
 
-print("Credenciais YouTube Music")
-# EMAIL = input("Email: ")
-# PASSWORD = input("Senha: ")
-
 EMAIL = "andreoliveira.net1"
 PASSWORD = "Andre-9664"
+
+if not EMAIL or not PASSWORD:
+    print("Credenciais YouTube Music")
+    EMAIL = input("Email: ")
+    PASSWORD = input("Senha: ")
 
 
 class YoutubeMusic:
@@ -39,7 +40,6 @@ class YoutubeMusic:
             self.button = Buttons(self.browser)
             self.input = Inputs(self.browser)
 
-            # Implementar login com esperas explícitas
             self.perform_login()
 
             self.tts(
@@ -247,6 +247,13 @@ class YoutubeMusic:
             self.tts("Modo aleatório desativado.")
         except:
             self.tts("Não foi possível desativar o modo aleatório.")
+
+    def like_music(self):  # DONE
+        try:
+            self.button.like_music.click()
+            self.tts("Música curtida.")
+        except:
+            self.tts("Não foi possível curtir a música.")
 
     def close(self):  # DONE
         self.browser.close()

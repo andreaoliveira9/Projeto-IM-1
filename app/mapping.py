@@ -74,6 +74,12 @@ class Buttons(MapObject):
             "/html/body/div[1]/div[1]/div[2]/c-wiz/div/div[3]/div/div[1]/div/div"
         )
 
+    @property
+    def like_music(self):
+        return self.find_element(
+            "/html/body/ytmusic-app/ytmusic-app-layout/ytmusic-player-bar/div[2]/div[3]/ytmusic-like-button-renderer/yt-button-shape[2]"
+        )
+
 
 class Inputs(MapObject):
     @property

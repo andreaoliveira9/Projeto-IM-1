@@ -23,10 +23,6 @@ list_intent = [
     "goodbye",
 ]
 
-MUSIC_INFO = """O YouTube Music é uma plataforma de streaming que permite aos usuários ouvir músicas e assistir a vídeos musicais. 
-                Você pode pesquisar por artistas, álbuns e playlists, criar suas próprias listas e explorar novas músicas. 
-                Aproveite a música!"""
-
 
 async def message_handler(youtube_music: YoutubeMusic, message: str):
     global intent_before
@@ -111,8 +107,8 @@ async def message_handler(youtube_music: YoutubeMusic, message: str):
         elif mode == "repeat_off":
             youtube_music.repeat_off()
 
-    elif intent == "add_to_favorites":
-        youtube_music.add_to_favorites()
+    elif intent == "add_to_favorites":  # DONE
+        youtube_music.like_music()
         youtube_music.tts("Música adicionada aos favoritos.")
 
     elif intent == "goodbye":  # DONE
