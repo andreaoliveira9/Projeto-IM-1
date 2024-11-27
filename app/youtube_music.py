@@ -103,7 +103,7 @@ class YoutubeMusic:
             print(f"Erro inesperado: {e}")
             self.close()
 
-    def pause(self):  # DONE
+    def pause(self):
         if self.paused:
             self.tts("A música já está pausada.")
             return
@@ -115,7 +115,7 @@ class YoutubeMusic:
         except:
             self.tts("Não foi possível pausar a música.")
 
-    def resume(self):  # DONE
+    def resume(self):
         if not self.paused:
             self.tts("A música já está tocando.")
             return
@@ -127,14 +127,14 @@ class YoutubeMusic:
         except:
             self.tts("Não foi possível retomar a música.")
 
-    def next_song(self):  # DONE
+    def next_song(self):
         try:
             self.button.next.click()
             self.tts("Próxima música.")
         except:
             self.tts("Não foi possível avançar para a próxima música.")
 
-    def previous_song(self):  # DONE
+    def previous_song(self):
         try:
             self.button.previous.click()
             self.button.previous.click()
@@ -142,7 +142,7 @@ class YoutubeMusic:
         except:
             self.tts("Não foi possível voltar para a música anterior.")
 
-    def increase_volume(self):  # DONE
+    def increase_volume(self):
         try:
             current_volume = volume.GetMasterVolumeLevelScalar()
             new_volume = min(100, current_volume + 0.1)
@@ -151,7 +151,7 @@ class YoutubeMusic:
         except:
             self.tts("Não foi possível aumentar o volume.")
 
-    def decrease_volume(self):  # DONE
+    def decrease_volume(self):
         try:
             current_volume = volume.GetMasterVolumeLevelScalar()
             new_volume = max(0, current_volume - 0.1)
@@ -160,7 +160,7 @@ class YoutubeMusic:
         except:
             self.tts("Não foi possível diminuir o volume.")
 
-    def mute(self):  # DONE
+    def mute(self):
         if self.muted:
             self.tts("O som já está desativado.")
             return
@@ -172,7 +172,7 @@ class YoutubeMusic:
         except:
             self.tts("Não foi possível silenciar o som.")
 
-    def unmute(self):  # DONE
+    def unmute(self):
         if not self.muted:
             self.tts("O som não está desativado.")
             return
@@ -184,14 +184,14 @@ class YoutubeMusic:
         except:
             self.tts("Não foi possível reativar o som.")
 
-    def repeat_song(self):  # DONE
+    def repeat_song(self):
         try:
             self.button.repeat.click()
             self.tts("Repetindo a música.")
         except:
             self.tts("Não foi possível repetir a música.")
 
-    def repeat_off(self):  # DONE
+    def repeat_off(self):
         if self.repeat == 0:
             self.tts("O modo de repetição já está desativado.")
             return
@@ -206,7 +206,7 @@ class YoutubeMusic:
         except:
             self.tts("Não foi possível ativar a repetição.")
 
-    def repeat_all(self):  # DONE
+    def repeat_all(self):
         if self.repeat == 1:
             self.tts("O modo de repetição de todas as músicas já está ativado.")
             return
@@ -221,7 +221,7 @@ class YoutubeMusic:
         except:
             self.tts("Não foi possível ativar a repetição.")
 
-    def repeat_one(self):  # DONE
+    def repeat_one(self):
         if self.repeat == 2:
             self.tts("O modo de repetição de uma música já está ativado.")
             return
@@ -236,7 +236,7 @@ class YoutubeMusic:
         except:
             self.tts("Não foi possível ativar a repetição.")
 
-    def shuffle_on(self):  # DONE
+    def shuffle_on(self):
         if self.shuffled:
             self.tts("O modo aleatório já está ativado.")
             return
@@ -248,7 +248,7 @@ class YoutubeMusic:
         except:
             self.tts("Não foi possível ativar o modo aleatório.")
 
-    def shuffle_off(self):  # DONE
+    def shuffle_off(self):
         if not self.shuffled:
             self.tts("O modo aleatório já está desativado.")
             return
@@ -260,14 +260,14 @@ class YoutubeMusic:
         except:
             self.tts("Não foi possível desativar o modo aleatório.")
 
-    def like_music(self):  # DONE
+    def like_music(self):
         try:
             self.button.like_music.click()
             self.tts("Música curtida.")
         except:
             self.tts("Não foi possível curtir a música.")
 
-    def search_music(self, song, artist):  # DONE
+    def search_music(self, song, artist):
         try:
             self.browser.get("https://music.youtube.com/")
 
@@ -358,7 +358,7 @@ class YoutubeMusic:
         except:
             self.tts("Não foi possível encontrar a playlist.")
 
-    def add_music_to_playlist(self, playlist):  # DONE
+    def add_music_to_playlist(self, playlist):
         try:
             action_chain = ActionChains(self.browser)
 
@@ -403,5 +403,6 @@ class YoutubeMusic:
         except:
             self.tts("Não foi possível encontrar a playlist.")
 
-    def close(self):  # DONE
+    def close(self):
         self.browser.close()
+        exit()
