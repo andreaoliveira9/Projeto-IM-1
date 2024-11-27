@@ -159,3 +159,21 @@ nlu:
       - Quero guardar esta música como favorita.
       - Podes marcar esta música nos favoritos?
       - Coloca esta faixa nos meus favoritos.
+
+  - intent: confirm_action
+    examples: |
+      - Sim, quero [confirmar](action:confirm) a ação.
+      - Confirmo a [opção](action:confirm) escolhida.
+      - Sim, está [correto](action:confirm).
+      - Confirmo a [seleção](action:confirm) feita.
+      - Sim, [confirmo](action:confirm) a escolha.
+      - Está [certo](action:confirm), pode prosseguir.
+      - Sim, [confirmo](action:confirm) a ação.
+      - Não, quero [cancelar](action:cancel) a ação.
+      - Não, [cancela](action:cancel) a seleção.
+      - Não, [desfaz](action:cancel) a escolha.
+      - Não, [anula](action:cancel) a ação.
+      - Não, [rejeita](action:cancel) a opção.
+      - Não, [recusa](action:cancel) a seleção.
+      - Não, [ignora](action:cancel) a escolha.
+      - Não, [nega](action:cancel) a ação.

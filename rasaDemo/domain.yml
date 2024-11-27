@@ -8,6 +8,7 @@ intents:
   - adjust_volume
   - set_mode
   - add_to_favorites
+  - confirm_action
 
 entities:
   - playlist
