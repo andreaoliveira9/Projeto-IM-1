@@ -3,16 +3,20 @@ from selenium.webdriver.common.action_chains import ActionChains
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
-import undetected_chromedriver as uc
-import time
-import os
 from selenium.webdriver.common.keys import Keys
-from utils import *
-from mapping import Buttons, Inputs
+import undetected_chromedriver as uc
 from ctypes import cast, POINTER
 from comtypes import CLSCTX_ALL
 from pycaw.pycaw import AudioUtilities, IAudioEndpointVolume
 from difflib import SequenceMatcher
+import time
+import os
+from dotenv import load_dotenv
+
+from utils import *
+from mapping import Buttons, Inputs
+
+load_dotenv(".env")
 
 # Obter o dispositivo de áudio padrão
 devices = AudioUtilities.GetSpeakers()
@@ -20,9 +24,8 @@ interface = devices.Activate(IAudioEndpointVolume._iid_, CLSCTX_ALL, None)
 volume = cast(interface, POINTER(IAudioEndpointVolume))
 
 # Credenciais do YouTube Music no .env
-
-EMAIL = os.getenv(".env", "y85516037@gmail.com")
-PASSWORD = os.getenv(".env", "Qawsedrf-12")
+EMAIL = os.getenv("EMAIL")
+PASSWORD = os.getenv("PASSWORD")
 
 if not EMAIL or not PASSWORD:
     print("Credenciais YouTube Music")
@@ -312,47 +315,50 @@ class YoutubeMusic:
 
     def play_playlist(self, playlist):
         try:
-            self.button.explore_tab.click()
+            self.button.library_tab.click()
 
-            # Localizar todos os elementos de playlists
             time.sleep(1)
-            playlist_elements = self.button.playlists_elements
-            print("playlist_elements")
-            print(playlist_elements)
 
-            # Obter os nomes das playlists e os elementos correspondentes
-            playlists = [(el.text, el) for el in playlist_elements]
-            print("playlists")
-            print(playlists)
-            # Verificar se encontrou playlists
+            container = self.button.playlists
+
+            time.sleep(1)
+
+            playlists = container.find_elements(
+                By.XPATH,
+                ".//a[@class='yt-simple-endpoint style-scope yt-formatted-string']",
+            )
+
             if not playlists:
-                print("Nenhuma playlist encontrada.")
+                self.tts("Nenhuma playlist encontrada.")
                 return None
 
-            # Calcular similaridade entre o nome-alvo e os nomes das playlists
+            playlists_names = [
+                element.text for element in playlists if element.text.strip()
+            ]
+
             def similarity(a, b):
                 return SequenceMatcher(None, a.lower(), b.lower()).ratio()
 
-            closest_playlist = max(playlists, key=lambda p: similarity(playlist, p[0]))
+            closest_playlist = max(
+                playlists_names, key=lambda p: similarity(playlist, p[0])
+            )
 
-            print("closest_playlist")
-            print(closest_name)
-            # Nome da playlist mais próxima e o elemento associado
-            closest_name, closest_element, closest_play_button = closest_playlist
-            print(f"Playlist mais próxima encontrada: {closest_name}")
+            target_playlist = None
+            for element in playlists:
+                if element.text.strip() == closest_playlist:
+                    target_playlist = element
+                    break
 
-            # Dar play na playlist mais próxima
-            self.driver.execute_script(
-                "arguments[0].scrollIntoView(true);", closest_play_button
-            )  # Rolando até o botão
-            time.sleep(1)  # Pausa para garantir que o elemento esteja visível
-            closest_play_button.click()
-            print(f"A reproduzir playlist: {closest_name}")
-            return closest_element
+            target_playlist.click()
+
+            time.sleep(1)
+
+            self.button.play_playlist.click()
+
         except:
             self.tts("Não foi possível encontrar a playlist.")
 
-    def add_music_to_playlist(self, playlist):
+    def add_music_to_playlist(self, playlist):  # DONE
         try:
             action_chain = ActionChains(self.browser)
 

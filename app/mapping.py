@@ -108,21 +108,15 @@ class Buttons(MapObject):
         )
 
     @property
-    def home_tab(self):
-        return self.find_element(
-            "/html/body/ytmusic-app/ytmusic-app-layout/tp-yt-app-drawer/div[2]/div/div[2]/ytmusic-guide-renderer/div[2]/ytmusic-guide-section-renderer[1]/div[2]/ytmusic-guide-entry-renderer[1]/tp-yt-paper-item"
-        )
-
-    @property
-    def explore_tab(self):
+    def library_tab(self):
         return self.find_element(
             "/html/body/ytmusic-app/ytmusic-app-layout/tp-yt-app-drawer/div[2]/div/div[2]/ytmusic-guide-renderer/div[2]/ytmusic-guide-section-renderer[1]/div[2]/ytmusic-guide-entry-renderer[3]/tp-yt-paper-item"
         )
 
     @property
-    def playlists_elements(self):
-        return self.find_elements(
-            By.CSS_SELECTOR, ".ytmusic-two-row-item-renderer .title a"
+    def playlists(self):
+        return self.find_element(
+            "/html/body/ytmusic-app/ytmusic-app-layout/div[4]/ytmusic-browse-response/div[2]/div[4]/ytmusic-section-list-renderer/div[2]/ytmusic-grid-renderer/div[2]"
         )
 
     @property
@@ -141,6 +135,12 @@ class Buttons(MapObject):
     def choose_playlist_list(self):
         return self.find_element(
             "/html/body/ytmusic-app/ytmusic-popup-container/tp-yt-paper-dialog/ytmusic-add-to-playlist-renderer/div[2]/div[2]"
+        )
+
+    @property
+    def play_playlist(self):
+        return self.find_element(
+            "/html/body/ytmusic-app/ytmusic-app-layout/div[4]/ytmusic-browse-response/div[2]/div[4]/div[1]/ytmusic-two-column-browse-results-renderer/div[1]/ytmusic-section-list-renderer/div[2]/ytmusic-editable-playlist-detail-header-renderer/ytmusic-responsive-header-renderer/div[6]/ytmusic-play-button-renderer/div/yt-icon"
         )
 
 

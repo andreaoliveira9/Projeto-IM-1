@@ -41,14 +41,6 @@ async def message_handler(youtube_music: YoutubeMusic, message: str):
     confidence = message["intent"]["confidence"]
     entities = message.get("entities", [])
 
-    intent = "add_music_to_playlist"
-    confidence = 0.9
-    entities = [
-        {"entity": "song", "value": "Dance Monkey"},
-        {"entity": "artist", "value": "Tones and I"},
-        {"entity": "playlist", "value": "Pop"},
-    ]
-
     if intent not in list_intent:
         youtube_music.tts(random_not_understand())
         print(f"Intent desconhecido: {intent}")
@@ -129,14 +121,14 @@ async def message_handler(youtube_music: YoutubeMusic, message: str):
     elif intent == "wich_music_is_playing":  # DONE
         youtube_music.get_current_music()
 
-    elif intent == "play_playlist":
+    elif intent == "play_playlist":  # DONE
         playlist = next((e["value"] for e in entities if e["entity"] == "playlist"), "")
 
         youtube_music.play_playlist(playlist)
 
         youtube_music.tts(f"Tocando a playlist '{playlist}'.")
 
-    elif intent == "add_music_to_playlist":
+    elif intent == "add_music_to_playlist":  # DONE
         song = next((e["value"] for e in entities if e["entity"] == "song"), None)
         artist = next((e["value"] for e in entities if e["entity"] == "artist"), None)
         playlist = next((e["value"] for e in entities if e["entity"] == "playlist"), "")
