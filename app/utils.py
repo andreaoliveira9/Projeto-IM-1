@@ -183,3 +183,12 @@ def random_not_understand():
         "Desculpe, não reconheci o pedido.",
         "Comando não entendido, pode tentar de novo?",
     ]
+
+
+class IntentNotUnderstoodWell:
+    def __init__(self, intent, entities):
+        self.intent = intent
+        self.entities = entities
+
+    def __str__(self):
+        return f"Intent: {self.intent}, Entities: {self.entities}"
