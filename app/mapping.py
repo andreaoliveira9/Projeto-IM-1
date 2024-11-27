@@ -81,9 +81,51 @@ class Buttons(MapObject):
         )
 
     @property
-    def first_music(self):
+    def first_music_play(self):
         return self.find_element(
             "/html/body/ytmusic-app/ytmusic-app-layout/div[4]/ytmusic-search-page/ytmusic-tabbed-search-results-renderer/div[2]/ytmusic-section-list-renderer/div[2]/ytmusic-shelf-renderer[1]/div[3]/ytmusic-responsive-list-item-renderer[1]/div[1]/ytmusic-item-thumbnail-overlay-renderer/div/ytmusic-play-button-renderer/div"
+        )
+
+    @property
+    def fisrt_music_options(self):
+        return self.find_element(
+            "/html/body/ytmusic-app/ytmusic-app-layout/div[4]/ytmusic-search-page/ytmusic-tabbed-search-results-renderer/div[2]/ytmusic-section-list-renderer/div[2]/ytmusic-shelf-renderer[1]/div[3]/ytmusic-responsive-list-item-renderer[1]/ytmusic-menu-renderer/yt-button-shape/button"
+        )
+
+    @property
+    def first_music_add_to_queue(self):
+        return self.find_element(
+            "/html/body/ytmusic-app/ytmusic-popup-container/tp-yt-iron-dropdown/div/ytmusic-menu-popup-renderer/tp-yt-paper-listbox/ytmusic-menu-service-item-renderer[2]"
+        )
+
+    @property
+    def home_tab(self):
+        return self.find_element(
+            "/html/body/ytmusic-app/ytmusic-app-layout/tp-yt-app-drawer/div[2]/div/div[2]/ytmusic-guide-renderer/div[2]/ytmusic-guide-section-renderer[1]/div[2]/ytmusic-guide-entry-renderer[1]/tp-yt-paper-item"
+        )
+
+    @property
+    def explore_tab(self):
+        return self.find_element(
+            "/html/body/ytmusic-app/ytmusic-app-layout/tp-yt-app-drawer/div[2]/div/div[2]/ytmusic-guide-renderer/div[2]/ytmusic-guide-section-renderer[1]/div[2]/ytmusic-guide-entry-renderer[3]/tp-yt-paper-item"
+        )
+
+    @property
+    def playlists_elements(self):
+        return self.find_elements(
+            By.CSS_SELECTOR, ".ytmusic-two-row-item-renderer .title a"
+        )
+
+    @property
+    def music_controls_music_name(self):
+        return self.find_element(
+            "/html/body/ytmusic-app/ytmusic-app-layout/ytmusic-player-bar/div[2]/div[2]/span/span[2]/yt-formatted-string/a[2]"
+        )
+
+    @property
+    def music_controls_artist_name(self):
+        return self.find_element(
+            "/html/body/ytmusic-app/ytmusic-app-layout/ytmusic-player-bar/div[2]/div[2]/span/span[2]/yt-formatted-string/a[1]"
         )
 
 

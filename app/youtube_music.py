@@ -1,23 +1,26 @@
 from selenium.common.exceptions import TimeoutException, NoSuchElementException
+from selenium.webdriver.common.action_chains import ActionChains
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 import undetected_chromedriver as uc
 import time
+import os
 from selenium.webdriver.common.keys import Keys
 from utils import *
 from mapping import Buttons, Inputs
 from ctypes import cast, POINTER
 from comtypes import CLSCTX_ALL
 from pycaw.pycaw import AudioUtilities, IAudioEndpointVolume
+from difflib import SequenceMatcher
 
 # Obter o dispositivo de áudio padrão
 devices = AudioUtilities.GetSpeakers()
 interface = devices.Activate(IAudioEndpointVolume._iid_, CLSCTX_ALL, None)
 volume = cast(interface, POINTER(IAudioEndpointVolume))
 
-EMAIL = "andreoliveira.net1"
-PASSWORD = "Andre-9664"
+# Credenciais do YouTube Music no .env
+
 
 if not EMAIL or not PASSWORD:
     print("Credenciais YouTube Music")
@@ -270,17 +273,82 @@ class YoutubeMusic:
             self.tts(f"Procurando por '{song}' de {artist}.")
 
             time.sleep(1)
-            print(self.button.first_music)
-            self.button.first_music.click()
-
         except:
             self.tts("Não foi possível encontrar a música.")
 
-    def play_public_playlist(self, playlist):
-        pass
+    def play_music_searched(self):
+        try:
+            self.button.first_music_play.click()
 
-    def play_mine_playlist(self, playlist):
-        pass
+            self.tts("Tocando a música.")
+        except:
+            self.tts("Não foi possível tocar a música.")
+
+    def get_current_music(self):
+        try:
+            music_name = self.button.music_controls_music_name.text
+            artist_name = self.button.music_controls_artist_name.text
+
+            self.tts(f"A música atual é {music_name} de {artist_name}.")
+        except:
+            self.tts("Não foi possível obter o nome da música atual.")
+
+    def add_to_queue(self):
+        try:
+            action_chain = ActionChains(self.browser)
+
+            action_chain.move_to_element(self.button.first_music_play).click(
+                self.button.fisrt_music_options
+            ).perform()
+
+            self.button.first_music_add_to_queue.click()
+
+            self.tts("Música adicionada à fila.")
+        except:
+
+            self.tts("Não foi possível adicionar a música à fila.")
+
+    def play_playlist(self, playlist):
+        try:
+            self.button.explore_tab.click()
+
+            # Localizar todos os elementos de playlists
+            time.sleep(1)
+            playlist_elements = self.button.playlists_elements
+            print("playlist_elements")
+            print(playlist_elements)
+
+            # Obter os nomes das playlists e os elementos correspondentes
+            playlists = [(el.text, el) for el in playlist_elements]
+            print("playlists")
+            print(playlists)
+            # Verificar se encontrou playlists
+            if not playlists:
+                print("Nenhuma playlist encontrada.")
+                return None
+
+            # Calcular similaridade entre o nome-alvo e os nomes das playlists
+            def similarity(a, b):
+                return SequenceMatcher(None, a.lower(), b.lower()).ratio()
+
+            closest_playlist = max(playlists, key=lambda p: similarity(playlist, p[0]))
+
+            print("closest_playlist")
+            print(closest_name)
+            # Nome da playlist mais próxima e o elemento associado
+            closest_name, closest_element, closest_play_button = closest_playlist
+            print(f"Playlist mais próxima encontrada: {closest_name}")
+
+            # Dar play na playlist mais próxima
+            self.driver.execute_script(
+                "arguments[0].scrollIntoView(true);", closest_play_button
+            )  # Rolando até o botão
+            time.sleep(1)  # Pausa para garantir que o elemento esteja visível
+            closest_play_button.click()
+            print(f"A reproduzir playlist: {closest_name}")
+            return closest_element
+        except:
+            self.tts("Não foi possível encontrar a playlist.")
 
     def close(self):  # DONE
         self.browser.close()

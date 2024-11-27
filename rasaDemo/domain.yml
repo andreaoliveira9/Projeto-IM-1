@@ -13,21 +13,14 @@ entities:
   - playlist
   - song
   - artist
-  - context
 
 slots:
   playlist:
     type: text
-    influence_conversation: true
+    influence_conversation: false
     mappings:
       - type: from_entity
         entity: playlist
-  context:
-    type: text
-    influence_conversation: true
-    mappings:
-      - type: from_entity
-        entity: context
   song:
     type: text
     influence_conversation: false

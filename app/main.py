@@ -16,6 +16,9 @@ intent_before = ""
 list_intent = [
     "search_music",
     "play_playlist",
+    "add_music_to_playlist",
+    "add_music_to_queue",
+    "wich_music_is_playing",
     "control_music",
     "change_track",
     "adjust_volume",
@@ -38,12 +41,13 @@ async def message_handler(youtube_music: YoutubeMusic, message: str):
     confidence = message["intent"]["confidence"]
     entities = message.get("entities", [])
 
-    intent = "play_playlist"
+    intent = "wich_music_is_playing"
     confidence = 0.9
     entities = [
-        {"entity": "playlist", "value": "Rock"},
-        {"entity": "context", "value": "public"},
+        {"entity": "song", "value": "Shape of You"},
+        {"entity": "artist", "value": "Ed Sheeran"},
     ]
+
     if intent not in list_intent:
         youtube_music.tts(random_not_understand())
         print(f"Intent desconhecido: {intent}")
@@ -104,26 +108,35 @@ async def message_handler(youtube_music: YoutubeMusic, message: str):
         youtube_music.like_music()
         youtube_music.tts("Música adicionada aos favoritos.")
 
-    elif intent == "search_music":
+    elif intent == "search_music":  # DONE
         # Identificar se é música ou playlist
         song = next((e["value"] for e in entities if e["entity"] == "song"), None)
         artist = next((e["value"] for e in entities if e["entity"] == "artist"), None)
 
         youtube_music.search_music(song, artist)
+        youtube_music.play_music_searched()
         youtube_music.tts(f"Tocando '{song}' de {artist}.")
 
-    elif intent == "play_playlist":
-        playlist = next(
-            (e["value"] for e in entities if e["entity"] == "playlist"), None
-        )
-        context = next((e["value"] for e in entities if e["entity"] == "context"), None)
+    elif intent == "add_music_to_queue":  # DONE
+        song = next((e["value"] for e in entities if e["entity"] == "song"), None)
+        artist = next((e["value"] for e in entities if e["entity"] == "artist"), None)
 
-        if context == "mine":
-            youtube_music.play_mine_playlist(playlist)
-        elif context == "public":
-            youtube_music.play_public_playlist(playlist)
+        youtube_music.search_music(song, artist)
+        youtube_music.add_to_queue()
+        youtube_music.tts(f"Adicionando '{song}' de {artist} à fila de reprodução.")
+
+    elif intent == "wich_music_is_playing":
+        youtube_music.get_current_music()
+
+    elif intent == "play_playlist":
+        playlist = next((e["value"] for e in entities if e["entity"] == "playlist"), "")
+
+        youtube_music.play_playlist(playlist)
 
         youtube_music.tts(f"Tocando a playlist '{playlist}'.")
+
+    elif intent == "add_music_to_playlist":
+        pass
 
     elif intent == "goodbye":  # DONE
         youtube_music.tts(random_goodbye())

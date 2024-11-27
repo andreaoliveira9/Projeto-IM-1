@@ -21,37 +21,11 @@ nlu:
 
   - intent: play_playlist
     examples: |
-      - Inicia a playlist [Pop Hits](playlist) [pública](context:public).
-      - Quero ouvir uma playlist [pública](context:public) chamada [Jazz Classics](playlist).
-      - Podes pôr algo do género [Rock](playlist) que seja [pública](context:public)?
-      - Coloca uma lista [pública](context:public) com [Natal](playlist), obrigado.
-      - Estou à procura de algo [público](context:public) para [Relaxar](playlist), consegues ajudar?
-      - Toca qualquer coisa de [Blues](playlist) disponível nas playlists [públicas](context:public).
-      - Quero ouvir músicas de [Metal](playlist) que estejam na biblioteca [pública](context:public).
+      - Inicia a playlist [Pop](playlist).
+      - Quero ouvir a playlist chamada [Jazz Classics](playlist).
       - Toca uma seleção [pública](context:public) de [K-Pop](playlist), por favor.
-      - Dá para pôr uma lista [pública](context:public) de música [Clássica](playlist)?
-      - Algo da coleção [pública](context:public) para [Concentração](playlist) seria ótimo.
-      - Das [minhas playlists](context:mine) quero ouvir [Hip-Hop](playlist).
-      - Das [minhas listas](context:mine), podes tocar [Relaxar](playlist)?
-      - Quero ouvir uma das [minhas playlists](context:mine) chamada [Treino](playlist).
-      - Podes iniciar a [minha playlist](context:mine) [Favoritas](playlist)?
-      - Gostaria de ouvir uma das [minhas listas](context:mine) chamada [Energia](playlist).
-      - Das [minhas playlists](context:mine), coloca [Viagem](playlist) para tocar.
-      - Toca a [minha lista](context:mine) de [Estudo](playlist), por favor.
-
-  - synonym: public
-    examples: |
-      - pública
-      - playlists públicas
-      - biblioteca pública
-      - lista pública
-
-  - synonym: mine
-    examples: |
-      - minhas playlists
-      - a minha playlist
-      - minhas listas
-      - pessoal
+      - Das minhas playlists quero ouvir [Hip-Hop](playlist).
+      - Coloca [Viagem](playlist) para tocar.
 
   - intent: control_music
     examples: |
