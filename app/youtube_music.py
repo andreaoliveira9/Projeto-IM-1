@@ -21,6 +21,8 @@ volume = cast(interface, POINTER(IAudioEndpointVolume))
 
 # Credenciais do YouTube Music no .env
 
+EMAIL = os.getenv(".env", "y85516037@gmail.com")
+PASSWORD = os.getenv(".env", "Qawsedrf-12")
 
 if not EMAIL or not PASSWORD:
     print("Credenciais YouTube Music")
@@ -347,6 +349,51 @@ class YoutubeMusic:
             closest_play_button.click()
             print(f"A reproduzir playlist: {closest_name}")
             return closest_element
+        except:
+            self.tts("Não foi possível encontrar a playlist.")
+
+    def add_music_to_playlist(self, playlist):
+        try:
+            action_chain = ActionChains(self.browser)
+
+            action_chain.move_to_element(self.button.first_music_play).click(
+                self.button.fisrt_music_options
+            ).perform()
+
+            self.button.first_music_add_to_playlist.click()
+
+            time.sleep(1)
+
+            container = self.button.choose_playlist_list
+
+            time.sleep(1)
+
+            playlists = container.find_elements(By.XPATH, "//*[@id='title']")
+
+            if not playlists:
+                self.tts("Nenhuma playlist encontrada.")
+                return None
+
+            playlists_names = [
+                element.text for element in playlists if element.text.strip()
+            ]
+
+            def similarity(a, b):
+                return SequenceMatcher(None, a.lower(), b.lower()).ratio()
+
+            closest_playlist = max(
+                playlists_names, key=lambda p: similarity(playlist, p[0])
+            )
+
+            target_playlist = None
+            for element in playlists:
+                if element.text.strip() == closest_playlist:
+                    target_playlist = element
+                    break
+
+            target_playlist.click()
+            self.tts(f"Música adicionada à playlist {playlist}.")
+
         except:
             self.tts("Não foi possível encontrar a playlist.")
 

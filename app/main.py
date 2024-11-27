@@ -41,11 +41,12 @@ async def message_handler(youtube_music: YoutubeMusic, message: str):
     confidence = message["intent"]["confidence"]
     entities = message.get("entities", [])
 
-    intent = "wich_music_is_playing"
+    intent = "add_music_to_playlist"
     confidence = 0.9
     entities = [
-        {"entity": "song", "value": "Shape of You"},
-        {"entity": "artist", "value": "Ed Sheeran"},
+        {"entity": "song", "value": "Dance Monkey"},
+        {"entity": "artist", "value": "Tones and I"},
+        {"entity": "playlist", "value": "Pop"},
     ]
 
     if intent not in list_intent:
@@ -125,7 +126,7 @@ async def message_handler(youtube_music: YoutubeMusic, message: str):
         youtube_music.add_to_queue()
         youtube_music.tts(f"Adicionando '{song}' de {artist} à fila de reprodução.")
 
-    elif intent == "wich_music_is_playing":
+    elif intent == "wich_music_is_playing":  # DONE
         youtube_music.get_current_music()
 
     elif intent == "play_playlist":
@@ -136,7 +137,12 @@ async def message_handler(youtube_music: YoutubeMusic, message: str):
         youtube_music.tts(f"Tocando a playlist '{playlist}'.")
 
     elif intent == "add_music_to_playlist":
-        pass
+        song = next((e["value"] for e in entities if e["entity"] == "song"), None)
+        artist = next((e["value"] for e in entities if e["entity"] == "artist"), None)
+        playlist = next((e["value"] for e in entities if e["entity"] == "playlist"), "")
+
+        youtube_music.search_music(song, artist)
+        youtube_music.add_music_to_playlist(playlist)
 
     elif intent == "goodbye":  # DONE
         youtube_music.tts(random_goodbye())

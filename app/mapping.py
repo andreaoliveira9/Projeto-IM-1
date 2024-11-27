@@ -8,6 +8,9 @@ class MapObject:
     def find_element(self, xpath):
         return self.browser.find_element(By.XPATH, xpath)
 
+    def find_elements(self, value):
+        return self.browser.find_elements(By.XPATH, value)
+
 
 class Buttons(MapObject):
     @property
@@ -99,6 +102,12 @@ class Buttons(MapObject):
         )
 
     @property
+    def first_music_add_to_playlist(self):
+        return self.find_element(
+            "/html/body/ytmusic-app/ytmusic-popup-container/tp-yt-iron-dropdown/div/ytmusic-menu-popup-renderer/tp-yt-paper-listbox/ytmusic-menu-navigation-item-renderer[2]"
+        )
+
+    @property
     def home_tab(self):
         return self.find_element(
             "/html/body/ytmusic-app/ytmusic-app-layout/tp-yt-app-drawer/div[2]/div/div[2]/ytmusic-guide-renderer/div[2]/ytmusic-guide-section-renderer[1]/div[2]/ytmusic-guide-entry-renderer[1]/tp-yt-paper-item"
@@ -126,6 +135,12 @@ class Buttons(MapObject):
     def music_controls_artist_name(self):
         return self.find_element(
             "/html/body/ytmusic-app/ytmusic-app-layout/ytmusic-player-bar/div[2]/div[2]/span/span[2]/yt-formatted-string/a[1]"
+        )
+
+    @property
+    def choose_playlist_list(self):
+        return self.find_element(
+            "/html/body/ytmusic-app/ytmusic-popup-container/tp-yt-paper-dialog/ytmusic-add-to-playlist-renderer/div[2]/div[2]"
         )
 
 
