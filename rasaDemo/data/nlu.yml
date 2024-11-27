@@ -169,6 +169,7 @@ nlu:
       - Sim, [confirmo](action:confirm) a escolha.
       - Está [certo](action:confirm), pode prosseguir.
       - Sim, [confirmo](action:confirm) a ação.
+      - [Sim](action:confirm).
       - Não, quero [cancelar](action:cancel) a ação.
       - Não, [cancela](action:cancel) a seleção.
       - Não, [desfaz](action:cancel) a escolha.
@@ -177,3 +178,4 @@ nlu:
       - Não, [recusa](action:cancel) a seleção.
       - Não, [ignora](action:cancel) a escolha.
       - Não, [nega](action:cancel) a ação.
+      - [Não](action:cancel).

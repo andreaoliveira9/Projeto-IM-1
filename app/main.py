@@ -47,8 +47,11 @@ async def message_handler(youtube_music: YoutubeMusic, message: str):
         return
     elif intent == "confirm_action":
         if intent_not_undestand_well:
-            if message["intent"]["name"] == "confirm":
-                if message["intent"]["confidence"] > 0.7:
+            if message["intent"]["name"] == "confirm_action":
+                if (
+                    message["intent"]["confidence"] > 0.7
+                    and message["entities"][0]["value"] == "confirm"
+                ):
                     intent = intent_not_undestand_well.intent
                     entities = intent_not_undestand_well.entities
                     youtube_music.tts("Ok, a fazer o que pediste.")
@@ -60,7 +63,7 @@ async def message_handler(youtube_music: YoutubeMusic, message: str):
             intent_not_undestand_well = None
         else:
             youtube_music.tts(random_not_understand())
-        return
+
     elif confidence < 0.45:
         youtube_music.tts(random_not_understand())
         return
@@ -69,7 +72,7 @@ async def message_handler(youtube_music: YoutubeMusic, message: str):
         youtube_music.tts(intent_not_sure(intent, entities))
         return
 
-    elif intent == "control_music":  # DONE
+    if intent == "control_music":  # DONE
         # Pausar ou continuar
         action = next((e["value"] for e in entities if e["entity"] == "action"), None)
         if action == "pause":
