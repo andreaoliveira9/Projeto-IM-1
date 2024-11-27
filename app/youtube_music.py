@@ -55,6 +55,7 @@ class YoutubeMusic:
                 "Bem-vindo ao YouTube Music, onde você pode ouvir suas músicas favoritas!"
             )
         except Exception as e:
+            self.tts("Não foi possível iniciar o YouTube Music.")
             print(f"Erro: {e}")
             self.close()
 
@@ -93,12 +94,6 @@ class YoutubeMusic:
 
             time.sleep(5)
 
-        except TimeoutException as te:
-            print(f"TimeoutException: {te}")
-            self.close()
-        except NoSuchElementException as ne:
-            print(f"NoSuchElementException: {ne}")
-            self.close()
         except Exception as e:
             print(f"Erro inesperado: {e}")
             self.close()

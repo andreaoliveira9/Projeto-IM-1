@@ -6,7 +6,7 @@ import websockets
 from utils import *
 from youtube_music import (
     YoutubeMusic,
-)  # Supondo que você tenha uma classe para controle de música
+)
 from tts import TTS
 
 HOST = "127.0.0.1"
