@@ -24,6 +24,7 @@ list_intent = [
     "adjust_volume",
     "set_mode",
     "add_to_favorites",
+    "confirm_action",
     "goodbye",
 ]
 
@@ -41,12 +42,16 @@ async def message_handler(youtube_music: YoutubeMusic, message: str):
     confidence = message["intent"]["confidence"]
     entities = message.get("entities", [])
 
-    if intent == "confirm_action":
+    if intent not in list_intent:
+        youtube_music.tts(random_not_understand())
+        return
+    elif intent == "confirm_action":
         if intent_not_undestand_well:
             if message["intent"]["name"] == "confirm":
                 if message["intent"]["confidence"] > 0.7:
                     intent = intent_not_undestand_well.intent
                     entities = intent_not_undestand_well.entities
+                    youtube_music.tts("Ok, a fazer o que pediste.")
                 else:
                     youtube_music.tts(random_not_understand())
             else:
