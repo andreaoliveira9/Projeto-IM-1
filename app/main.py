@@ -4,7 +4,6 @@ import ssl
 import websockets
 
 from utils import *
-
 from youtube_music import (
     YoutubeMusic,
 )  # Supondo que você tenha uma classe para controle de música
@@ -54,9 +53,9 @@ async def message_handler(youtube_music: YoutubeMusic, message: str):
                 ):
                     intent = intent_not_undestand_well.intent
                     entities = intent_not_undestand_well.entities
-                    youtube_music.tts("Ok, a fazer o que pediste.")
+                    youtube_music.tts("Ok, vou fazer o que pediste.")
                 else:
-                    youtube_music.tts(random_not_understand())
+                    youtube_music.tts("Não entendi o que disseste.")
             else:
                 youtube_music.tts("Ok, não vou fazer nada.")
 
@@ -120,7 +119,6 @@ async def message_handler(youtube_music: YoutubeMusic, message: str):
 
     elif intent == "add_to_favorites":  # DONE
         youtube_music.like_music()
-        youtube_music.tts("Música adicionada aos favoritos.")
 
     elif intent == "search_music":  # DONE
         # Identificar se é música ou playlist
@@ -129,7 +127,6 @@ async def message_handler(youtube_music: YoutubeMusic, message: str):
 
         youtube_music.search_music(song, artist)
         youtube_music.play_music_searched()
-        youtube_music.tts(f"Tocando '{song}' de {artist}.")
 
     elif intent == "add_music_to_queue":  # DONE
         song = next((e["value"] for e in entities if e["entity"] == "song"), None)
@@ -137,7 +134,6 @@ async def message_handler(youtube_music: YoutubeMusic, message: str):
 
         youtube_music.search_music(song, artist)
         youtube_music.add_to_queue()
-        youtube_music.tts(f"Adicionando '{song}' de {artist} à fila de reprodução.")
 
     elif intent == "wich_music_is_playing":  # DONE
         youtube_music.get_current_music()
@@ -146,8 +142,6 @@ async def message_handler(youtube_music: YoutubeMusic, message: str):
         playlist = next((e["value"] for e in entities if e["entity"] == "playlist"), "")
 
         youtube_music.play_playlist(playlist)
-
-        youtube_music.tts(f"Tocando a playlist '{playlist}'.")
 
     elif intent == "add_music_to_playlist":  # DONE
         song = next((e["value"] for e in entities if e["entity"] == "song"), None)
@@ -165,7 +159,6 @@ async def message_handler(youtube_music: YoutubeMusic, message: str):
 
     else:
         youtube_music.tts(random_not_understand())
-        print(f"Intent não reconhecido: {intent}")
 
 
 def intent_not_sure(intent, entities):
