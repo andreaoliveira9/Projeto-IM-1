@@ -245,4 +245,10 @@ nlu:
       - Podes dizer-me o nome da música que está a tocar?
       - Que música está a tocar neste momento?
 
+  - intent: add_music_to_playlist
+    examples: |
+      - Adiciona a música [Dance Monkey](song) de [Tones and I](artist) à playlist [Pop](playlist).
+      - Adiciona a música [Someone Like You](song) da cantora [Adele](artist) à playlist [Pop](playlist).
+      - Adiciona a música [Bohemian Rhapsody](song) do artista [Queen](artist) à playlist [Rock Alternativo](playlist).
+      - Adiciona a música [Despacito](song) do cantor [Luis Fonsi](artist) à playlist [Top 50](playlist).
     
