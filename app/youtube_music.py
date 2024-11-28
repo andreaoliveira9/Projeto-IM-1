@@ -137,6 +137,13 @@ class YoutubeMusic:
         except:
             self.tts("Não foi possível voltar para a música anterior.")
 
+    def repeat_song(self):
+        self.tts("Repetindo a música.")
+        try:
+            self.button.previous.click()
+        except:
+            self.tts("Não foi possível repetir a música.")
+
     def increase_volume(self):
         self.tts("Aumentando o volume.")
         try:
@@ -178,13 +185,6 @@ class YoutubeMusic:
             self.muted = False
         except:
             self.tts("Não foi possível ativar o som.")
-
-    def repeat_song(self):
-        self.tts("Repetindo a música.")
-        try:
-            self.button.repeat.click()
-        except:
-            self.tts("Não foi possível repetir a música.")
 
     def repeat_off(self):
         if self.repeat == 0:
