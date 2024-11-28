@@ -63,7 +63,7 @@ async def message_handler(youtube_music: YoutubeMusic, message: str):
         else:
             youtube_music.tts(random_not_understand())
 
-    elif confidence < 0.45:
+    elif confidence <= 0.45:
         youtube_music.tts(random_not_understand())
         return
     elif confidence > 0.45 and confidence < 0.8:
@@ -139,14 +139,18 @@ async def message_handler(youtube_music: YoutubeMusic, message: str):
         youtube_music.get_current_music()
 
     elif intent == "play_playlist":  # DONE
-        playlist = next((e["value"] for e in entities if e["entity"] == "playlist"), "")
+        playlist = next(
+            (e["value"] for e in entities if e["entity"] == "playlist"), None
+        )
 
         youtube_music.play_playlist(playlist)
 
     elif intent == "add_music_to_playlist":  # DONE
         song = next((e["value"] for e in entities if e["entity"] == "song"), None)
         artist = next((e["value"] for e in entities if e["entity"] == "artist"), None)
-        playlist = next((e["value"] for e in entities if e["entity"] == "playlist"), "")
+        playlist = next(
+            (e["value"] for e in entities if e["entity"] == "playlist"), None
+        )
 
         youtube_music.search_music(song, artist)
         youtube_music.add_music_to_playlist(playlist)
@@ -238,7 +242,9 @@ def intent_not_sure(intent, entities):
     elif intent == "add_music_to_playlist":
         song = next((e["value"] for e in entities if e["entity"] == "song"), None)
         artist = next((e["value"] for e in entities if e["entity"] == "artist"), None)
-        playlist = next((e["value"] for e in entities if e["entity"] == "playlist"), "")
+        playlist = next(
+            (e["value"] for e in entities if e["entity"] == "playlist"), None
+        )
 
         return f"Penso que disseste que querias adicionar a música '{song}' de {artist} à playlist '{playlist}', está certo?"
 
