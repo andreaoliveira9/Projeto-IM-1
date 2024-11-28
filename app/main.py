@@ -28,7 +28,7 @@ list_intent = [
 ]
 
 
-async def message_handler(youtube_music: YoutubeMusic, message: str):
+async def message_handler(youtube_music: YoutubeMusic, message: str, tts: TTS):
     global intent_not_undestand_well
     message = process_message(message)
     print(f"Message received: {message}")
@@ -78,6 +78,8 @@ async def message_handler(youtube_music: YoutubeMusic, message: str):
             youtube_music.pause()
         elif action == "resume":
             youtube_music.resume()
+        else:
+            tts("Não percebi se queres pausar ou continuar a música.")
 
     elif intent == "change_track":  # DONE
         # Mudar para próxima ou anterior
@@ -90,9 +92,12 @@ async def message_handler(youtube_music: YoutubeMusic, message: str):
             youtube_music.previous_song()
         elif direction == "same":
             youtube_music.repeat_song()
+        else:
+            tts(
+                "Não percebi se queres passar para a póxima música, ir para a anterior ou repetir esta música."
+            )
 
     elif intent == "adjust_volume":  # DONE
-        # Ações de volume
         action = next((e["value"] for e in entities if e["entity"] == "action"), None)
         if action == "increase":
             youtube_music.increase_volume()
@@ -102,9 +107,10 @@ async def message_handler(youtube_music: YoutubeMusic, message: str):
             youtube_music.mute()
         elif action == "unmute":
             youtube_music.unmute()
+        else:
+            tts("Não percebi de queres aumentar, diminuir, desloigar ou ligar o som.")
 
     elif intent == "set_mode":  # DONE
-        # Modos como shuffle ou repeat
         mode = next((e["value"] for e in entities if e["entity"] == "mode"), None)
         if mode == "shuffle_on":
             youtube_music.shuffle_on()
@@ -116,24 +122,41 @@ async def message_handler(youtube_music: YoutubeMusic, message: str):
             youtube_music.repeat_all()
         elif mode == "repeat_off":
             youtube_music.repeat_off()
+        else:
+            tts("Não percebi qual o modo queres colocar.")
 
     elif intent == "add_to_favorites":  # DONE
         youtube_music.like_music()
 
     elif intent == "search_music":  # DONE
-        # Identificar se é música ou playlist
         song = next((e["value"] for e in entities if e["entity"] == "song"), None)
         artist = next((e["value"] for e in entities if e["entity"] == "artist"), None)
 
-        youtube_music.search_music(song, artist)
-        youtube_music.play_music_searched()
+        if song and artist:
+            youtube_music.search_music(song, artist)
+            youtube_music.play_music_searched()
+        else:
+            if not song and not artist:
+                tts("Não percebi o nome nem o artista.")
+            elif not song:
+                tts("Não percebi o nome da música.")
+            elif not artist:
+                tts("Não percebi o nome do artista.")
 
     elif intent == "add_music_to_queue":  # DONE
         song = next((e["value"] for e in entities if e["entity"] == "song"), None)
         artist = next((e["value"] for e in entities if e["entity"] == "artist"), None)
 
-        youtube_music.search_music(song, artist)
-        youtube_music.add_to_queue()
+        if song and artist:
+            youtube_music.search_music(song, artist)
+            youtube_music.add_to_queue()
+        else:
+            if not song and not artist:
+                tts("Não percebi o nome nem o artista.")
+            elif not song:
+                tts("Não percebi o nome da música.")
+            elif not artist:
+                tts("Não percebi o nome do artista.")
 
     elif intent == "wich_music_is_playing":  # DONE
         youtube_music.get_current_music()
@@ -143,7 +166,10 @@ async def message_handler(youtube_music: YoutubeMusic, message: str):
             (e["value"] for e in entities if e["entity"] == "playlist"), None
         )
 
-        youtube_music.play_playlist(playlist)
+        if playlist:
+            youtube_music.play_playlist(playlist)
+        else:
+            tts("Não percebi o nome da playlist.")
 
     elif intent == "add_music_to_playlist":  # DONE
         song = next((e["value"] for e in entities if e["entity"] == "song"), None)
@@ -152,8 +178,24 @@ async def message_handler(youtube_music: YoutubeMusic, message: str):
             (e["value"] for e in entities if e["entity"] == "playlist"), None
         )
 
-        youtube_music.search_music(song, artist)
-        youtube_music.add_music_to_playlist(playlist)
+        if song and artist and playlist:
+            youtube_music.search_music(song, artist)
+            youtube_music.add_music_to_playlist(playlist)
+        else:
+            if not song and not artist and not playlist:
+                tts("Não percebi o nome da música, do artista e da playlist.")
+            elif not song and not artist:
+                tts("Não percebi o nome da música e do artista.")
+            elif not song and not playlist:
+                tts("Não percebi o nome da música e da playlist.")
+            elif not artist and not playlist:
+                tts("Não percebi o nome do artista e da playlist.")
+            elif not song:
+                tts("Não percebi o nome da música.")
+            elif not artist:
+                tts("Não percebi o nome do artista.")
+            elif not playlist:
+                tts("Não percebi o nome da playlist.")
 
     elif intent == "goodbye":  # DONE
         youtube_music.tts(random_goodbye())
@@ -283,7 +325,7 @@ async def main():
         while not_quit:
             try:
                 msg = await websocket.recv()
-                await message_handler(youtube_music=youtube_music, message=msg)
+                await message_handler(youtube_music=youtube_music, message=msg, tts=tts)
             except Exception as e:
                 tts("Ocorreu um erro, a fechar o aplicativo")
                 print(f"Error: {e}")
