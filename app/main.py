@@ -328,7 +328,7 @@ async def main():
         while not_quit:
             try:
                 msg = await websocket.recv()
-                await message_handler(youtube_music=youtube_music, message=msg, tts=tts)
+                await message_handler(youtube_music=youtube_music, message=msg)
             except Exception as e:
                 tts("Ocorreu um erro, a fechar o aplicativo")
                 print(f"Error: {e}")
