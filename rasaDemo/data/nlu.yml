@@ -4,49 +4,63 @@ nlu:
     examples: |
       - Até já, Assistente. Vou desligar agora.
       - Quero fechar a aplicação, adeus.
-      - Terminar por hoje, até logo.
+      - Vou terminar por hoje, até logo.
       - Vou sair, obrigado pela ajuda.
-      - Fechar o programa agora, até mais.
+      - Fechar o programa agora.
       - Encerrar a aplicação, obrigado.
-      - Acabar por aqui, até breve.
       - Fechar o Assistente, adeus.
 
   - intent: search_music
     examples: |
-      - Toca a música [Shape of You](song), por favor.
+      - Quero ouvir a música [Stayin' Alive](song) dos [Bee Gees](artist).
+      - Toca a música [Hotel California](song) de [Eagles](artist).
+      - Procura por [Despacito](song) do cantor [Luis Fonsi](artist).
       - Quero ouvir a música [Bohemian Rhapsody](song) do artista [Queen](artist).
       - Podes tocar [Blinding Lights](song) do cantor [The Weeknd](artist)?
-      - Preciso ouvir algo do grupo [Coldplay](artist), podes pôr?
+      - Preciso ouvir algo da banda [Coldplay](artist), podes pôr?
       - Põe a música [Someone Like You](song) da cantora [Adele](artist).
+      - Põe a tocar a música [Shape of You](song) do cantor [Ed Sheeran](artist).
 
   - intent: play_playlist
     examples: |
       - Inicia a playlist [Pop](playlist).
       - Quero ouvir a playlist chamada [Jazz Classics](playlist).
-      - Toca uma seleção [pública](context:public) de [K-Pop](playlist), por favor.
+      - Toca uma playlist [pública](context:public) de [K-Pop](playlist), por favor.
       - Das minhas playlists quero ouvir [Hip-Hop](playlist).
-      - Coloca [Viagem](playlist) para tocar.
-
+      - Põe a playlist [Rock Alternativo](playlist) a tocar.
+      - Quero ouvir a playlist [Top 50](playlist).
+    
   - intent: control_music
     examples: |
       - Podes fazer uma [pausa](action:pause) na música que está a tocar?
+      - Podes [parar](action:pause) a música por um momento?
       - Dá para [parar](action:pause) a música agora, por favor?
       - Preciso que [interrompas](action:pause) a música por um momento.
-      - Retoma a música que estava a tocar, por favor.
-      - Dá para [voltar](action:resume) à música anterior?
+      - [Retoma](action:resume) a música que estava a tocar, por favor.
+      - [Retoma](action:resume) a música que estava a tocar.
+      - [Volta](action:resume) à música que estava.
       - [Continua](action:resume) a tocar a música onde tinha parado.
+      - Quero continuar a ouvir a música, [retoma](action:resume) por favor.
+      - Quero [continuar](action:resume) a ouvir a música.
+      - [Pára](action:pause) a música.
+      - Estou a receber uma chamada, [pausa](action:pause) a música.
 
   - synonym: pause
     examples: |
       - parar
+      - pares
+      - pára
       - pausa
+      - pausar
       - interromper
       - suspender
 
   - synonym: resume
     examples: |
       - continuar
+      - continua
       - retomar
+      - retoma
       - tocar de novo
       - reiniciar
 
@@ -59,6 +73,10 @@ nlu:
       - Reproduz a [mesma](direction:same) música outra vez, por favor.
       - Quero ouvir a [música atual](direction:same) novamente.
       - Podes [repetir](direction:same) a música que está a tocar?
+      - [próxima](direction:next) música.
+      - [Repete](direction:same) a música que está a tocar.
+      - Estou [Farto](direction:next) desta música.
+      - [Não gosto](direction:next) desta música.
 
   - synonym: next
     examples: |
@@ -77,6 +95,7 @@ nlu:
       - repetir
       - música atual
       - de novo
+      - novamente
 
   - intent: adjust_volume
     examples: |
@@ -85,9 +104,19 @@ nlu:
       - [Reduz](action:decrease) o volume agora, está muito alto.
       - Dá para [diminuir](action:decrease) o som?
       - Podes [silenciar](action:mute) o áudio neste momento?
-      - Coloca no mudo, por favor.
+      - Podes [desligar](action:mute) o som?
+      - [Desliga](action:mute) o som, por favor.
+      - Coloca no [mudo](action:mute), por favor.
       - Ativa o som novamente.
-      - Dá para [tirar do mudo](action:unmute) o som?
+      - Dá para [tirar do mudo](action:unmute)?
+      - Põe o [som de volta](action:unmute), por favor.
+      - [Tira](action:mute) o som.
+      - [Ativa](action:unmute) o som.
+      - [Desativa](action:mute) o som.
+      - A música está [muito baixa](action:increase).
+      - O som está [muito baixo](action:increase).
+      - A música está [muito alta](action:decrease).
+      - O som está [muito alto](action:decrease).
 
   - synonym: increase
     examples: |
@@ -96,6 +125,7 @@ nlu:
       - som mais alto
       - amplificar
       - aumenta
+      - sobe
 
   - synonym: decrease
     examples: |
@@ -103,38 +133,50 @@ nlu:
       - abaixar
       - diminuir
       - diminui
+      - baixa
 
   - synonym: mute
     examples: |
       - silenciar
       - desligar
-      - colocar no mudo
+      - colocar em silêncio
+      - mudo
 
   - synonym: unmute
     examples: |
       - ativar som
+      - ativa
+      - ativar
       - som de volta
-      - tirar do mudo
+      - tirar silêncio
+      - dar unmute
 
   - intent: set_mode
     examples: |
       - Ativa o [modo aleatório](mode:shuffle_on) para as músicas.
+      - Ativar o [modo aleatório](mode:shuffle_on).
+      - Podes [misturar](mode:shuffle_on) as músicas?
       - Quero ouvir a playlist em [modo aleatório](mode:shuffle_on).
       - Podes [desativar](mode:shuffle_off) o shuffle, por favor?
+      - Podes [ativar](mode:shuffle_on) o modo aleatório?
       - Dá para [desligar](mode:shuffle_off) o modo aleatório?
       - Ativa o [modo de repetição de uma música](mode:repeat_one), obrigado.
-      - Configura o [modo de repetir todas](mode:repeat_all), por favor.
+      - Repete a [mesma música](mode:repeat_one) por favor.
+      - Repete [este conjunto de músicas](mode:repeat_all) por favor.
       - Retira o [modo de repetição](mode:repeat_off), está bem?
+      - Desativa a [repetição](mode:repeat_off).
 
   - synonym: shuffle_on
     examples: |
       - aleatório
       - misturar
+      - shuffle
 
   - synonym: shuffle_off
     examples: |
       - ordem normal
       - sem shuffle
+      - desativar
 
   - synonym: repeat_one
     examples: |
@@ -159,6 +201,7 @@ nlu:
       - Quero guardar esta música como favorita.
       - Podes marcar esta música nos favoritos?
       - Coloca esta faixa nos meus favoritos.
+      - Dá um like nesta música.
 
   - intent: confirm_action
     examples: |
@@ -179,3 +222,27 @@ nlu:
       - Não, [ignora](action:cancel) a escolha.
       - Não, [nega](action:cancel) a ação.
       - [Não](action:cancel).
+
+  - intent: add_music_to_queue
+    examples: |
+      - Adiciona a música [Dance Monkey](song) de [Tones and I](artist) à fila.
+      - Põe a música [Blinding Lights](song) do cantor [The Weeknd](artist) na fila.
+      - Adiciona a música [Someone Like You](song) da cantora [Adele](artist) à lista.
+      - Põe a tocar a música [Shape of You](song) do cantor [Ed Sheeran](artist) a seguir.
+      - Adiciona a música [Bohemian Rhapsody](song) do artista [Queen](artist) à fila.
+      - Põe a música [Hotel California](song) de [Eagles](artist) na fila.
+      - Adiciona a música [Despacito](song) do cantor [Luis Fonsi](artist) à lista.
+
+  - intent: wich_music_is_playing
+    examples: |
+      - Que música está a tocar?
+      - Qual é a música que está a tocar?
+      - Podes dizer-me que música está a tocar?
+      - Que música está a tocar agora?
+      - Qual é a música que está a tocar neste momento?
+      - Podes dizer-me que música está a tocar?
+      - Qual é o nome desta música?
+      - Podes dizer-me o nome da música que está a tocar?
+      - Que música está a tocar neste momento?
+
+    
