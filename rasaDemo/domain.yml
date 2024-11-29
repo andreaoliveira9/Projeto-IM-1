@@ -9,38 +9,48 @@ intents:
   - set_mode
   - add_to_favorites
   - confirm_action
+  - wich_music_is_playing
+  - add_music_to_queue
+  - add_music_to_playlist
 
 entities:
   - playlist
   - song
   - artist
   - action
+  - direction
 
 slots:
   playlist:
     type: text
-    influence_conversation: false
+    influence_conversation: true
     mappings:
       - type: from_entity
         entity: playlist
   song:
     type: text
-    influence_conversation: false
+    influence_conversation: true
     mappings:
       - type: from_entity
         entity: song
   artist:
     type: text
-    influence_conversation: false
+    influence_conversation: true
     mappings:
       - type: from_entity
         entity: artist
   action:
     type: text
-    influence_conversation: false
+    influence_conversation: true
     mappings:
       - type: from_entity
         entity: action
+  direction:
+    type: text
+    influence_conversation: true
+    mappings:
+      - type: from_entity
+        entity: direction
 
 session_config:
   session_expiration_time: 60
