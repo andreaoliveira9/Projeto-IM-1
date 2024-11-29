@@ -257,9 +257,14 @@ nlu:
       - O que posso fazer
       - Que interações existem
       - Que interações posso fazer
+      - Preciso de ajuda
       - Explica-me [todas](help_option) as opções
       - Ajuda com [pesquisar uma música](help_option)
+      - Ajuda como [tocar uma playlist](help_option)
+      - Ajuda como [pesquisar uma música](help_option)
       - Ajuda com [tocar uma playlist](help_option)
+      - Ajuda como [tocar uma playlist](help_option)
+      - Ajuda como [pesquisar uma playlist](help_option)
       - Ajuda com [controlar a música](help_option)
       - Ajuda com [mudar de música](help_option)
       - Ajuda com [ajustar o volume](help_option)
