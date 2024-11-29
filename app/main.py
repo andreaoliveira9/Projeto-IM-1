@@ -209,7 +209,7 @@ async def message_handler(youtube_music: YoutubeMusic, message: str):
         if option:
             youtube_music.help(option)
         else:
-            youtube_music.tts("Não percebi a opção que queres ajuda.")
+            youtube_music.help()
 
     elif intent == "goodbye":  # DONE
         youtube_music.tts(random_goodbye())
@@ -303,6 +303,16 @@ def intent_not_sure(intent, entities):
         )
 
         return f"Penso que disseste que querias adicionar a música '{song}' de {artist} à playlist '{playlist}', está certo?"
+
+    elif intent == "help":
+        option = next(
+            (e["value"] for e in entities if e["entity"] == "help_option"), None
+        )
+
+        if option:
+            return f"Penso que disseste que querias ajuda sobre '{option}', está certo?"
+        else:
+            return "Penso que disseste que querias ajuda, está certo?"
 
     elif intent == "goodbye":
         return "Penso que disseste que querias fechar o aplicativo, está certo?"

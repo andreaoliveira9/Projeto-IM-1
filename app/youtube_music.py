@@ -397,87 +397,98 @@ class YoutubeMusic:
             self.tts("Não foi possível encontrar a playlist.")
 
     def help(self, option):
-        if option == "todas" or option == "pesquisar uma música":
+        if option:
+            if option == "todas" or option == "pesquisar uma música":
+                self.tts(
+                    "Para pesquisar uma música, diga, por exemplo, 'Põe a tocar a música Shape of You do cantor Ed Sheeran.'."
+                )
+                time.sleep(1)
+            if option == "todas" or option == "tocar uma playlist":
+                self.tts(
+                    "Para tocar uma playlist, diga, por exemplo, 'Quero uma playlist de Pop.'."
+                )
+                time.sleep(1)
+            if option == "todas" or option == "controlar a música":
+                self.tts("Para pausar a música, diga, por exemplo, 'Pausa a musica.'.")
+                time.sleep(1)
+                self.tts(
+                    "Para continuar a música, diga, por exemplo, 'Quero continuar a ouvir a música.'."
+                )
+                time.sleep(1)
+            if option == "todas" or option == "mudar de música":
+                self.tts("Para avançar de música, diga, por exemplo, 'Próxima faixa.'.")
+                time.sleep(1)
+                self.tts(
+                    "Para voltar para a música anterior, diga, por exemplo, 'Quero ouvir a musica anterior.'."
+                )
+                time.sleep(1)
+                self.tts("Para repetir a música, diga, por exemplo, 'Repetir música.'.")
+                time.sleep(1)
+            if option == "todas" or option == "ajustar o volume":
+                self.tts(
+                    "Para aumentar o volume, diga, por exemplo, 'Aumentar o volume.'."
+                )
+                time.sleep(1)
+                self.tts(
+                    "Para diminuir o volume, diga, por exemplo, 'Diminuir o volume.'."
+                )
+                time.sleep(1)
+                self.tts("Para ativar o som, diga, por exemplo, 'Ativa o som.'.")
+                time.sleep(1)
+                self.tts("Para desativar o som, diga, por exemplo, 'Desativa o som.'.")
+            if option == "todas" or option == "mudar o modo":
+                self.tts(
+                    "Para ativar o modo aleatório, diga, por exemplo, 'Podes misturar as músicas?'."
+                )
+                time.sleep(1)
+                self.tts(
+                    "Para desativar o modo aleatório, diga, por exemplo, 'Desativar o modo aleatório.'."
+                )
+                time.sleep(1)
+                self.tts(
+                    "Para ativar o modo de repetição de uma música, diga, por exemplo, 'Repete a mesma música por favor.'."
+                )
+                time.sleep(1)
+                self.tts(
+                    "Para ativar o modo de repetição de todas as músicas, diga, por exemplo, 'Repete este conjunto de músicas por favor.'."
+                )
+                time.sleep(1)
+                self.tts(
+                    "Para desativar o modo de repetição, diga, por exemplo, 'Desativa o modo de repetição.'."
+                )
+                time.sleep(1)
+            if option == "todas" or option == "adicionar aos favoritos":
+                self.tts(
+                    "Para adicionar a música aos favoritos, diga, por exemplo, 'Dá like na musica'."
+                )
+                time.sleep(1)
+            if option == "todas" or option == "confirmar açao":
+                self.tts("Para confirmar a ação, diga, por exemplo, 'Sim'.")
+                time.sleep(1)
+            if option == "todas" or option == "adicionar à fila":
+                self.tts(
+                    "Para adicionar a música à fila, diga, por exemplo, 'Põe a tocar a música Shape of You do cantor Ed Sheeran a seguir.'."
+                )
+                time.sleep(1)
+            if option == "todas" or option == "saber que música esta a tocar":
+                self.tts(
+                    "Para saber que música está a tocar, diga, por exemplo, 'Que música está a tocar?'."
+                )
+                time.sleep(1)
+            if option == "todas" or option == "adicionar à playlist":
+                self.tts(
+                    "Para adicionar a música à playlist, diga, por exemplo, 'Adiciona a música Someone Like You da cantora Adele à playlist de Pop.'."
+                )
+                time.sleep(1)
+            if option == "todas" or option == "sair da aplicação":
+                self.tts(
+                    "Para sair da aplicação, diga, por exemplo, 'Quero fechar a aplicação, adeus.'."
+                )
+                time.sleep(1)
+        else:
             self.tts(
-                "Para pesquisar uma música, diga, por exemplo, 'Põe a tocar a música Shape of You do cantor Ed Sheeran.'."
-            )
-            time.sleep(1)
-        if option == "todas" or option == "tocar uma playlist":
-            self.tts(
-                "Para tocar uma playlist, diga, por exemplo, 'Quero uma playlist de Pop.'."
-            )
-            time.sleep(1)
-        if option == "todas" or option == "controlar a música":
-            self.tts("Para pausar a música, diga, por exemplo, 'Pausa a musica.'.")
-            time.sleep(1)
-            self.tts(
-                "Para continuar a música, diga, por exemplo, 'Quero continuar a ouvir a música.'."
-            )
-            time.sleep(1)
-        if option == "todas" or option == "mudar de música":
-            self.tts("Para avançar de música, diga, por exemplo, 'Próxima faixa.'.")
-            time.sleep(1)
-            self.tts(
-                "Para voltar para a música anterior, diga, por exemplo, 'Quero ouvir a musica anterior.'."
-            )
-            time.sleep(1)
-            self.tts("Para repetir a música, diga, por exemplo, 'Repetir música.'.")
-            time.sleep(1)
-        if option == "todas" or option == "ajustar o volume":
-            self.tts("Para aumentar o volume, diga, por exemplo, 'Aumentar o volume.'.")
-            time.sleep(1)
-            self.tts("Para diminuir o volume, diga, por exemplo, 'Diminuir o volume.'.")
-            time.sleep(1)
-            self.tts("Para ativar o som, diga, por exemplo, 'Ativa o som.'.")
-            time.sleep(1)
-            self.tts("Para desativar o som, diga, por exemplo, 'Desativa o som.'.")
-        if option == "todas" or option == "mudar o modo":
-            self.tts(
-                "Para ativar o modo aleatório, diga, por exemplo, 'Podes misturar as músicas?'."
-            )
-            time.sleep(1)
-            self.tts(
-                "Para desativar o modo aleatório, diga, por exemplo, 'Desativar o modo aleatório.'."
-            )
-            time.sleep(1)
-            self.tts(
-                "Para ativar o modo de repetição de uma música, diga, por exemplo, 'Repete a mesma música por favor.'."
-            )
-            time.sleep(1)
-            self.tts(
-                "Para ativar o modo de repetição de todas as músicas, diga, por exemplo, 'Repete este conjunto de músicas por favor.'."
-            )
-            time.sleep(1)
-            self.tts(
-                "Para desativar o modo de repetição, diga, por exemplo, 'Desativa o modo de repetição.'."
-            )
-            time.sleep(1)
-        if option == "todas" or option == "adicionar aos favoritos":
-            self.tts(
-                "Para adicionar a música aos favoritos, diga, por exemplo, 'Dá like na musica'."
-            )
-            time.sleep(1)
-        if option == "todas" or option == "confirmar açao":
-            self.tts("Para confirmar a ação, diga, por exemplo, 'Sim'.")
-            time.sleep(1)
-        if option == "todas" or option == "adicionar à fila":
-            self.tts(
-                "Para adicionar a música à fila, diga, por exemplo, 'Põe a tocar a música Shape of You do cantor Ed Sheeran a seguir.'."
-            )
-            time.sleep(1)
-        if option == "todas" or option == "saber que música esta a tocar":
-            self.tts(
-                "Para saber que música está a tocar, diga, por exemplo, 'Que música está a tocar?'."
-            )
-            time.sleep(1)
-        if option == "todas" or option == "adicionar à playlist":
-            self.tts(
-                "Para adicionar a música à playlist, diga, por exemplo, 'Adiciona a música Someone Like You da cantora Adele à playlist de Pop.'."
-            )
-            time.sleep(1)
-        if option == "todas" or option == "sair da aplicação":
-            self.tts(
-                "Para sair da aplicação, diga, por exemplo, 'Quero fechar a aplicação, adeus.'."
+                "Em que posso ajudar?"
+                + "Podes pedir para pesquisar uma música, tocar uma playlist, controlar a música, mudar de música, ajustar o volume, mudar o modo, adicionar aos favoritos, confirmar a ação, adicionar à fila, saber que música está a tocar, adicionar à playlist e sair da aplicação."
             )
             time.sleep(1)
 
