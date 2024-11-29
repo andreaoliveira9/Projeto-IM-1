@@ -169,7 +169,7 @@ class YoutubeMusic:
 
         self.tts("Desativando o som.")
         try:
-            self.button.mute.click()
+            volume.SetMute(1, None)
             self.muted = True
         except:
             self.tts("Não foi possível desativar o som.")
@@ -181,7 +181,7 @@ class YoutubeMusic:
 
         self.tts("Ativando o som.")
         try:
-            self.button.mute.click()
+            volume.SetMute(0, None)
             self.muted = False
         except:
             self.tts("Não foi possível ativar o som.")
