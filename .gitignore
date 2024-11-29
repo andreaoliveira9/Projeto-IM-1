@@ -165,3 +165,5 @@ FusionEngine/
 mmiframeworkV2/
 rasaDemo/.rasa/cache
 rasaDemo/models
+
+.DS_Store
