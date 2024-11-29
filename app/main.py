@@ -25,6 +25,7 @@ list_intent = [
     "add_to_favorites",
     "confirm_action",
     "goodbye",
+    "help",
 ]
 
 
@@ -199,6 +200,16 @@ async def message_handler(youtube_music: YoutubeMusic, message: str):
                 youtube_music.tts("Não percebi o nome do artista.")
             elif not playlist:
                 youtube_music.tts("Não percebi o nome da playlist.")
+
+    elif intent == "help":  # DONE
+        option = next(
+            (e["value"] for e in entities if e["entity"] == "help_option"), None
+        )
+
+        if option:
+            youtube_music.help(option)
+        else:
+            youtube_music.tts("Não percebi a opção que queres ajuda.")
 
     elif intent == "goodbye":  # DONE
         youtube_music.tts(random_goodbye())

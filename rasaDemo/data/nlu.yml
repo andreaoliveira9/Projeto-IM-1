@@ -29,7 +29,7 @@ nlu:
       - Das minhas playlists quero ouvir [Hip-Hop](playlist).
       - Põe a playlist [Rock Alternativo](playlist) a tocar.
       - Quero ouvir a playlist [Top 50](playlist).
-    
+
   - intent: control_music
     examples: |
       - Podes fazer uma [pausa](action:pause) na música que está a tocar?
@@ -251,4 +251,22 @@ nlu:
       - Adiciona a música [Someone Like You](song) da cantora [Adele](artist) à playlist [Pop](playlist).
       - Adiciona a música [Bohemian Rhapsody](song) do artista [Queen](artist) à playlist [Rock Alternativo](playlist).
       - Adiciona a música [Despacito](song) do cantor [Luis Fonsi](artist) à playlist [Top 50](playlist).
-    
+
+  - intent: help
+    examples: |
+      - O que posso fazer
+      - Que interações existem
+      - Que interações posso fazer
+      - Explica-me [todas](help_option) as opções
+      - Ajuda com [pesquisar uma música](help_option)
+      - Ajuda com [tocar uma playlist](help_option)
+      - Ajuda com [controlar a música](help_option)
+      - Ajuda com [mudar de música](help_option)
+      - Ajuda com [ajustar o volume](help_option)
+      - Ajuda com [mudar o modo](help_option)
+      - Ajuda com [adicionar aos favoritos](help_option)
+      - Ajuda com [confirmar açao](help_option)
+      - Ajuda com [adicionar à fila](help_option)
+      - Ajuda com [saber que música esta a tocar](help_option)
+      - Ajuda com [adicionar à playlist](help_option)
+      - Ajuda com [sair da aplicação](help_option)

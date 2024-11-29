@@ -12,6 +12,7 @@ intents:
   - wich_music_is_playing
   - add_music_to_queue
   - add_music_to_playlist
+  - help
 
 entities:
   - playlist
@@ -20,6 +21,7 @@ entities:
   - action
   - direction
   - mode
+  - help_option
 
 slots:
   playlist:
@@ -58,6 +60,12 @@ slots:
     mappings:
       - type: from_entity
         entity: mode
+  help_option:
+    type: text
+    influence_conversation: true
+    mappings:
+      - type: from_entity
+        entity: help_option
 
 session_config:
   session_expiration_time: 60
