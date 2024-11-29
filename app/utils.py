@@ -15,6 +15,19 @@ def random_goodbye():
         "Até logo! Espero que tenha gostado da música!",
         "Tchau! Volte sempre para ouvir mais!",
         "Adeus! Até a próxima!",
+        "Tchau! Espero que você tenha uma boa música!",
+        "Até mais! Estou aqui quando você precisar!",
+    ]
+
+
+@randomize
+def random_not_understand():
+    return [
+        "Desculpe, não entendi o que pediu.",
+        "Não compreendi o comando, pode repetir?",
+        "Pode dizer novamente? Não entendi.",
+        "Desculpe, não reconheci o pedido.",
+        "Comando não entendido, pode tentar de novo?",
     ]
 
 
