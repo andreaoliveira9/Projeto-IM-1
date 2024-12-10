@@ -209,7 +209,7 @@ async def message_handler(youtube_music: YoutubeMusic, message: str):
         if option:
             youtube_music.help(option)
         else:
-            youtube_music.help()
+            youtube_music.help(None)
 
     elif intent == "goodbye":  # DONE
         youtube_music.tts(random_goodbye())
